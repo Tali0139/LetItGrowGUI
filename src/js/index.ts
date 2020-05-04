@@ -3,29 +3,26 @@ import axios, {
     AxiosError
 } from "../../node_modules/axios/index"
 
-interface ICar {
-    id: number
-    model: string
-    vendor: string
-    price: number
+interface IPlant {
+    
 }
 
-let baseUri: string = "http://anbo-carsrest.azurewebsites.net/api/cars"
+let baseUri: string = "Azure"
 
 new Vue({
     el: "#app",
     data: {
-        cars: [],
+        plants: [],
         errors: [],
         deleteId: 0,
         deleteMessage: "",
-        formData: { model: "", vendor: "", price: 0 },
+        formData: { },
         addMessage: ""
     },
     methods: {
         getAllCars() {
-            axios.get<ICar[]>(baseUri)
-                .then((response: AxiosResponse<ICar[]>) => {
+            axios.get<IPlant[]>(baseUri)
+                .then((response: AxiosResponse<IPlant[]>) => {
                     this.cars = response.data
                 })
                 .catch((error: AxiosError) => {
@@ -46,7 +43,7 @@ new Vue({
                 })
         },
         addCar() {
-            axios.post<ICar>(baseUri, this.formData)
+            axios.post<IPlant>(baseUri, this.formData)
                 .then((response: AxiosResponse) => {
                     let message: string = "response " + response.status + " " + response.statusText
                     this.addMessage = message
