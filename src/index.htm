@@ -86,9 +86,9 @@
             <div class="card-body">
 
               <h2 style="margin-top: -5px;"></h2>
-              <p class="card-text"><i class="glyphicon glyphicon-certificate"></i> Temp: 5°C - 30°C</p>
-              <p class="card-text"><i class="glyphicon glyphicon-tint"></i> Vanding: Hver dag. </p>
-              <p class="card-text"><i class="glyphicon glyphicon-grain"></i> Gødning: Ja</p>
+              <p class="card-text"><i class="glyphicon glyphicon-certificate"></i> Minimum Temp:{{plant.main_species.growth.temperature_minimum.deg_c}}°C</p>
+              <p class="card-text"><i class="glyphicon glyphicon-tint"></i> Vanding: {{plant.main_species.growth.precipitation_minimum.cm}} cm </p>
+              <p class="card-text"><i class="glyphicon glyphicon-grain"></i> Gødning: {{plant.main_species.growth.fertility_requirement}}</p>
               <p class="card-text"><small class="text-muted">Blev sidst vandet - 1 dag siden</small></p>
               <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
                 Se detaljer
@@ -99,7 +99,7 @@
                 <div class="modal-dialog modal-dialog-centered" role="document">
                   <div class="modal-content">
                     <div class="modal-header">
-                      <h5 class="modal-title" id="exampleModalLongTitle">Plante navn</h5>
+                      <h5 class="modal-title" id="exampleModalLongTitle">{{ plant.common_name}}</h5>
                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                       </button>
