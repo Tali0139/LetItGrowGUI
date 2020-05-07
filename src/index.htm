@@ -52,8 +52,8 @@
         </li>
       </ul>
       <form class="form-inline my-2 my-lg-0">
-        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" id="SearchBar">
+        <button v-on:click="getSearchPlants" class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
       </form>
     </div>
   </nav>
@@ -61,7 +61,7 @@
 
     <div id="app">
 
-      <button v-on:click="getAllPlants" style="margin-top: 1em;" class="btn btn-primary">Get all plants</button>
+      <button v-on:click="getAllPlants" id="GetAllPlantsButton" style="margin-top: 1em;" class="btn btn-primary">Get all plants</button>
 
       <div class="row">
         <div style="width: 100px;" class="col-md">
@@ -73,20 +73,22 @@
             <p style="margin-top: 15px;" >  Weather info: Temp <a href="#" class="alert-link"> {{weatherData[weatherData.length-1].randomTemperature}}°C </a> Rain <a href="#" class="alert-link"> {{weatherData[weatherData.length-1].rain}}.mm
               </a> Wind speed <a href="#" class="alert-link"> {{weatherData[weatherData.length-1].windSpeed}}.m/s</a> </p>
               
-              <div v-if="weatherData[weatherData.length-1].rain >= 10">
+              <div v-if="weatherData[weatherData.length-1].rain >= 1">
                 <span class="iconify" width="5em" data-icon="typcn-weather-downpour" data-inline="false" ></span>
             </div>
-            <div v-else-if="weatherData[weatherData.length-1].rain <= 10 ">
+            <div v-else-if="weatherData[weatherData.length-1].rain <= 0 && weatherData[weatherData.length-1].randomTemperature >= 10  ">
               <span class="iconify" width="5em" data-icon="typcn-weather-sunny" data-inline="false"></span>
             </div>
-
+            <div v-else-if="weatherData[weatherData.length-1].randomTemperature <= 10 && weatherData[weatherData.length-1].rain <= 0 ">
+              <span class="iconify" width="5em" data-icon="websymbol-cloud" data-inline="false"></span>
+            </div>
           </div>
         </div>
       </div>
 
 
       <div class="row">
-        <div class="card-deck" v-for="plant in plantsSorted" style="width: 450px;">
+        <div class="card-deck" v-for="plant in plantsSorted" id="plantDeck" style="width: 450px;">
           <div class="card" style="margin-left: 20px; margin-bottom: 20px;">
             <h2 style="margin-top: -5px;"> {{ plant.common_name}} </h2>
             <div v-if="plant.images != 0">
@@ -96,7 +98,7 @@
 
               <h2 style="margin-top: -5px;"></h2>
               <p class="card-text"><i class="glyphicon glyphicon-certificate"></i> Minimum Temp:{{plant.main_species.growth.temperature_minimum.deg_c}}°C</p>
-              <p class="card-text"><i class="glyphicon glyphicon-tint"></i> Watering needs: {{plant.main_species.growth.precipitation_minimum.cm}} cm </p>
+              <p class="card-text"><i class="glyphicon glyphicon-tint"></i> Watering needs: {{plant.main_species.growth.moisture_use}}</p>
               <p class="card-text"><i class="glyphicon glyphicon-grain"></i> Fertilisation requirements: {{plant.main_species.growth.fertility_requirement}}</p>
               <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">Details</button>
               <!-- Modal -->
@@ -111,17 +113,14 @@
                       </button>
                     </div>
                     <div class="modal-body">
-                      <p>LYS: Masser aflys er afgørende. I sommermånederne kan den blomstre i det
-                        fri, men også om vinteren må den stå lyst. Den klarer sig bedre i vinterhaven end i stuen.</p>
 
-                      <p> TEMPERATUR: Holder af varme og frisk luft. Om vinteren må temperaturen
-                        helst ikke komme under 5°C. Trives ikke i tør centralvarmeluft.</p>
+                      <p>MINIMUM RAIN PRECIPITATION: {{plant.main_species.growth.precipitation_minimum.cm}} cm</p>
 
-                      <p>VANDING: Vand regelmæssigt, næsten hver dag om sommeren. Om vinteren kun
-                        ca. hver 10. dag. Regnvand er det bedste, og det er vigtigt, at
-                        vandet er lunt. Koldt vand kan hæmme knoppernes udspring. </p>
+                      <p>SEED PERSISTENCE: {{plant.main_species.fruit_or_seed.seed_persistence}}</p>
 
-                      <p>GØDNING: Om sommeren flydende gødning hver 14. dag.</p>
+                      <p>LIFESPAN: {{plant.main_species.specifications.lifespan}}</p>
+
+                      <p>MATURE HEIGHT: {{plant.main_species.specifications.mature_height.cm}} cm</p>
 
                       <p>DROUGHT TOLERANCE: {{plant.main_species.growth.drought_tolerance}} </p>
                     </div>
