@@ -266,7 +266,7 @@ interface Class {
 }
 
 
-let baseUri: string = "https://growproxy.azurewebsites.net/plants?complete_data=true&token=Mm9iZ21HRkk2V1BhSTFLaUJQL0d5dz09&page_size=200"
+let baseUri: string = "https://growproxy.azurewebsites.net/plants?complete_data=true&token=Mm9iZ21HRkk2V1BhSTFLaUJQL0d5dz09&page_size=50"
 // let baseUri: string = "https://growproxy.azurewebsites.net/plants?q=Canna&token=Mm9iZ21HRkk2V1BhSTFLaUJQL0d5dz09"
  //let baseUri: string = "https://growproxy.azurewebsites.net/plants/135533?token=Mm9iZ21HRkk2V1BhSTFLaUJQL0d5dz09"
 let WeatherUri: string = "https://letitgrowweather.azurewebsites.net/api/weather"
