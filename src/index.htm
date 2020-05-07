@@ -60,7 +60,7 @@
 
     <div id="app">
 
-      <button v-on:click="getAllCars" style="margin-top: 1em;" class="btn btn-primary">Get all plants</button>
+      <button v-on:click="getAllPlants" style="margin-top: 1em;" class="btn btn-primary">Get all plants</button>
 
       <div class="row">
         <div style="width: 100px;" class="col-md">
@@ -76,11 +76,11 @@
 
 
       <div class="row">
-        <div class="card-deck" v-for="car in cars" style="width: 450px;">
+        <div class="card-deck" v-for="plant in plantsSorted" style="width: 450px;">
           <div class="card" style="margin-left: 20px; margin-bottom: 20px;">
-            <h2 style="margin-top: -5px;"> {{ car.common_name}} </h2>
-            <div v-if="car.images">
-              <img class="card-img-top" :src="car.images[0].url" alt="Card image cap">
+            <h2 style="margin-top: -5px;"> {{ plant.common_name}} </h2>
+            <div v-if="plant.images != 0">
+              <img class="card-img-top" :src="plant.images[0].url" alt="Card image cap">
             </div>
             <div class="card-body">
 
