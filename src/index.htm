@@ -14,9 +14,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-
-
-
+ 
 </head>
 
 <style>
@@ -39,7 +37,7 @@
       <span class="navbar-toggler-icon"></span>
     </button>
 
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <div class="collapse navbar-collapse" style="margin-left: 5em;" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item ">
           <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
@@ -61,15 +59,16 @@
   <div class="container">
 
     <div id="app">
-      <button v-on:click="getAllPlants" class="btn btn-primary">Get all plants</button>
+
+      <button v-on:click="getAllCars" style="margin-top: 1em;" class="btn btn-primary">Get all plants</button>
 
       <div class="row">
-        <div style="width: 200px;" class="col-md">
+        <div style="width: 100px;" class="col-md">
           <h1 class="h1">My plants</h1>
         </div>
-        <div style="width: 200px;" class="col-md">
-          <div class="alert alert-primary">
-            <p> Vejret i haven: Temp <a href="#" class="alert-link"> 30°C </a> Regn <a href="#" class="alert-link"> 1.mm
+        <div style="width: 500px;" class="col-md">
+          <div class="alert alert-primary" style="margin-top: -3em;">
+            <p style="margin-top: 15px;" >  Vejret i haven: Temp <a href="#" class="alert-link"> 30°C </a> Regn <a href="#" class="alert-link"> 1.mm
               </a> Vindhastighed <a href="#" class="alert-link"> 11.m/s</a> </p>
           </div>
         </div>
@@ -77,11 +76,11 @@
 
 
       <div class="row">
-        <div class="card-deck" v-for="plant in plantsSorted" style="width: 450px;">
+        <div class="card-deck" v-for="car in cars" style="width: 450px;">
           <div class="card" style="margin-left: 20px; margin-bottom: 20px;">
-            <h2> {{ plant.common_name}} </h2>
-            <div v-if="plant.images != 0" >
-              <img class="card-img-top" :src="plant.images[0].url" alt="Card image cap">
+            <h2 style="margin-top: -5px;"> {{ car.common_name}} </h2>
+            <div v-if="car.images">
+              <img class="card-img-top" :src="car.images[0].url" alt="Card image cap">
             </div>
             <div class="card-body">
 
