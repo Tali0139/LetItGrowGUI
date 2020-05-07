@@ -328,7 +328,7 @@ new Vue({
                   console.log(response.statusText)
                   console.log(response.data)
                   this.weatherData = response.data
-                  setInterval(this.getWeatherData, 50000)
+                  setInterval(this.getWeatherData, 10000)
               })
               .catch((error: AxiosError) => {
                   //this.message = error.message

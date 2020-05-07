@@ -14,6 +14,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+  <script src="https://code.iconify.design/1/1.0.6/iconify.min.js"></script>
  
 </head>
 
@@ -43,7 +44,7 @@
           <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item active">
-          <a class="nav-link" href="#">My plants</a>
+          <a class="nav-link" href="#">Plants</a>
         </li>
 
         <li class="nav-item">
@@ -64,13 +65,21 @@
 
       <div class="row">
         <div style="width: 100px;" class="col-md">
-          <h1 class="h1">My plants</h1>
+          <h1 class="h1">List of plants</h1>
         </div>
         <div style="width: 500px;" class="col-md">
           <div class="alert alert-primary" style="margin-top: -3em;">
             <p>Latest reading: {{weatherData[weatherData.length-1].measureTime}}, Location: {{weatherData[weatherData.length-1].deviceLocation}}</p>
-            <p style="margin-top: 15px;" >  Vejret i haven: Temp <a href="#" class="alert-link"> {{weatherData[weatherData.length-1].randomTemperature}}°C </a> Regn <a href="#" class="alert-link"> {{weatherData[weatherData.length-1].rain}}.mm
-              </a> Vindhastighed <a href="#" class="alert-link"> {{weatherData[weatherData.length-1].windSpeed}}.m/s</a> </p>
+            <p style="margin-top: 15px;" >  Weather info: Temp <a href="#" class="alert-link"> {{weatherData[weatherData.length-1].randomTemperature}}°C </a> Rain <a href="#" class="alert-link"> {{weatherData[weatherData.length-1].rain}}.mm
+              </a> Wind speed <a href="#" class="alert-link"> {{weatherData[weatherData.length-1].windSpeed}}.m/s</a> </p>
+              
+              <div v-if="weatherData[weatherData.length-1].rain >= 10">
+                <span class="iconify" width="5em" data-icon="typcn-weather-downpour" data-inline="false" ></span>
+            </div>
+            <div v-else-if="weatherData[weatherData.length-1].rain <= 10 ">
+              <span class="iconify" width="5em" data-icon="typcn-weather-sunny" data-inline="false"></span>
+            </div>
+
           </div>
         </div>
       </div>
@@ -87,12 +96,9 @@
 
               <h2 style="margin-top: -5px;"></h2>
               <p class="card-text"><i class="glyphicon glyphicon-certificate"></i> Minimum Temp:{{plant.main_species.growth.temperature_minimum.deg_c}}°C</p>
-              <p class="card-text"><i class="glyphicon glyphicon-tint"></i> Vanding: {{plant.main_species.growth.precipitation_minimum.cm}} cm </p>
-              <p class="card-text"><i class="glyphicon glyphicon-grain"></i> Gødning: {{plant.main_species.growth.fertility_requirement}}</p>
-              <p class="card-text"><small class="text-muted">Blev sidst vandet - 1 dag siden</small></p>
-              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
-                Se detaljer
-              </button>
+              <p class="card-text"><i class="glyphicon glyphicon-tint"></i> Watering needs: {{plant.main_species.growth.precipitation_minimum.cm}} cm </p>
+              <p class="card-text"><i class="glyphicon glyphicon-grain"></i> Fertilisation requirements: {{plant.main_species.growth.fertility_requirement}}</p>
+              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">Details</button>
               <!-- Modal -->
               <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
                 aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -115,7 +121,9 @@
                         ca. hver 10. dag. Regnvand er det bedste, og det er vigtigt, at
                         vandet er lunt. Koldt vand kan hæmme knoppernes udspring. </p>
 
-                      <p></p>GØDNING: Om sommeren flydende gødning hver 14. dag.</p>
+                      <p>GØDNING: Om sommeren flydende gødning hver 14. dag.</p>
+
+                      <p>DROUGHT TOLERANCE: {{plant.main_species.growth.drought_tolerance}} </p>
                     </div>
                     <div class="modal-footer">
                       <button type="button" class="btn btn-secondary" data-dismiss="modal">Luk</button>
