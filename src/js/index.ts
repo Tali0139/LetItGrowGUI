@@ -328,11 +328,11 @@ new Vue({
                   console.log(response.statusText)
                   console.log(response.data)
                   this.weatherData = response.data
-                  setInterval(this.getWeatherData, 10000)
+                  setInterval(this.getWeatherData, 60000)
               })
               .catch((error: AxiosError) => {
                   //this.message = error.message
-                  alert(error.message) // https://www.w3schools.com/js/js_popup.asp
+                  //alert(error.message) // https://www.w3schools.com/js/js_popup.asp
               })
       },
         
