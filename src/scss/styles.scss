@@ -7,9 +7,11 @@ $colorHeading: #be4a14;
 
 h2
 {
-    color: $colorHeading;
+    font-size: 10px;
+    color:#424242;
 }
 
 h1{
-    @extend h2;
+    font-size: 40;
+    color: #616161;
 }

@@ -3,36 +3,127 @@
 
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <title>Car Shop</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LetItGrow</title>
   <link rel="stylesheet" type="text/css" href="bundle.css" />
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-  
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
+
+  
 </head>
 
+<style>
+  .card-img-top {
+    width: 100%;
+    height: 20vw;
+    object-fit: cover;
+  }
+</style>
+
 <body>
-  <h1>Car Shop</h1>
-  <div id="app">
-    <h2>Get All</h2>
-    <button v-on:click="getAllCars" class="btn btn-primary">Get all cars</button>
-    <div class="columns medium-3" v-for="car in cars">
-      <div class="card">
-        <div class="card-divider">
-          {{ car.id }}
-        </div>
-        <div class="card-section" v-if="car.images">
-          <p>{{car.images[0].url}}
-            <img :src="car.images[0].url">
-          </img>
-          </p>
-     
+
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">
+      <img src="https://d1nhio0ox7pgb.cloudfront.net/_img/g_collection_png/standard/512x512/plant.png" width="30" height="30" alt="">
+    Let It Grow</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item ">
+          <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="#">Mine Planter</a>
+        </li>
+        
+        <li class="nav-item">
+          <a class="nav-link" href="#">Min side</a>
+        </li>
+      </ul>
+      <form class="form-inline my-2 my-lg-0">
+        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Søg</button>
+      </form>
+    </div>
+  </nav>
+  <div class="container">
+
+    <div id="app">
+      <button v-on:click="getAllCars" class="btn btn-primary">Hent Planter</button>
+
+      <div class="row">
+        <div class="col">
+          <h1>Mine Planter</h1>
         </div>
       </div>
+
+
+      <div class="row">
+        <div class="card-deck" v-for="car in cars" style="width: 450px;">
+          <div class="card" style="margin-left: 20px; margin-bottom: 20px;">
+            <h2 style="margin-top: -5px;"> {{ car.common_name}} </h2>
+            <div v-if="car.images">
+              <img class="card-img-top" :src="car.images[0].url" alt="Card image cap">
+            </div>
+            <div class="card-body">
+
+              <h2 style="margin-top: -5px;"></h2>
+              <p class="card-text"><i class="glyphicon glyphicon-certificate"></i> Temp: 5°C - 30°C</p>
+              <p class="card-text"><i class="glyphicon glyphicon-tint"></i> Vanding: Hver dag. </p>
+              <p class="card-text"><i class="glyphicon glyphicon-grain"></i> Gødning: Ja</p>
+              <p class="card-text"><small class="text-muted">Blev sidst vandet - 1 dag siden</small></p>
+              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+                Se detaljer
+              </button>
+              <!-- Modal -->
+              <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+                aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLongTitle">Plante navn</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <p>LYS: Masser aflys er afgørende. I sommermånederne kan den blomstre i det 
+                      fri, men også om vinteren må den stå lyst. Den klarer sig bedre i vinterhaven end i stuen.</p>
+
+                    <p> TEMPERATUR: Holder af varme og frisk luft. Om vinteren må temperaturen 
+                      helst ikke komme under 5°C. Trives ikke i tør centralvarmeluft.</p> 
+
+                      <p>VANDING: Vand regelmæssigt, næsten hver dag om sommeren. Om vinteren kun
+                         ca. hver 10. dag. Regnvand er det bedste, og det er vigtigt, at 
+                         vandet er lunt. Koldt vand kan hæmme knoppernes udspring. </p>
+
+                      <p></p>GØDNING: Om sommeren flydende gødning hver 14. dag.</p>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Luk</button>
+                      
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+      </div>
     </div>
+
     <!--<ul>
       <li v-for="car in cars">
         {{car.scientific_name}}
@@ -40,8 +131,8 @@
    </ul>-->
     <!--span v-else>No cars</span-->
 
-    <h2>Delete</h2>
-    <input class="form-control" v-model.number="deleteId" placeholder="id" type="number"/>
+    <!-- <h2>Delete</h2>
+    <input class="form-control" v-model.number="deleteId" placeholder="id" type="number" />
     <button v-on:click="deleteCar(deleteId)" class="btn btn-warning">Delete</button>
     {{deleteMessage}}
 
@@ -51,8 +142,8 @@
     <input v-model.number="formData.price" placeholder="price" type="number" />
     <button v-on:click="addCar()" class="btn btn-success">Add</button>
     <div>{{addMessage}}</div>
-  </div>
-  <script src="bundle.js"></script>
+  </div> -->
+    <script src="bundle.js"></script>
 </body>
 
 </html>

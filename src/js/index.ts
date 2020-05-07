@@ -258,12 +258,17 @@ interface Class {
   }
       
 
-let baseUri: string = "https://growproxy.azurewebsites.net/plants/136759?token=Mm9iZ21HRkk2V1BhSTFLaUJQL0d5dz09"
+let baseUri: string = "https://growproxy.azurewebsites.net/plants/?complete_data=true&token=Mm9iZ21HRkk2V1BhSTFLaUJQL0d5dz09"
+// let baseUri: string = "https://growproxy.azurewebsites.net/plants?q=Canna&token=Mm9iZ21HRkk2V1BhSTFLaUJQL0d5dz09"
+ //let baseUri: string = "https://growproxy.azurewebsites.net/plants/135533?token=Mm9iZ21HRkk2V1BhSTFLaUJQL0d5dz09"
+
 
 new Vue({
     el: "#app",
     data: {
+        defaultPic: "https://d1nhio0ox7pgb.cloudfront.net/_img/g_collection_png/standard/512x512/plant.png",
         cars: [],
+        carsSorted: [],
         errors: [],
         deleteId: 0,
         deleteMessage: "",
@@ -277,12 +282,26 @@ new Vue({
                     console.log(response.statusText)
                     console.log(response.data)
                     this.cars = response.data
+                   // this.cars.forEach((response.data) => { this.getPlantById(car.id)});
                 })
                 .catch((error: AxiosError) => {
                     //this.message = error.message
                     alert(error.message) // https://www.w3schools.com/js/js_popup.asp
                 })
         },
+        getPlantById(id: number) {
+            axios.get<IRoot[]>("https://growproxy.azurewebsites.net/plants/" + id + "?" + "token=Mm9iZ21HRkk2V1BhSTFLaUJQL0d5dz09")
+                .then((response: AxiosResponse<IRoot[]>) => {
+                    console.log(response.statusText)
+                    console.log(response.data)
+                    this.carsSorted.push(response.data)
+                                          
+                })
+                .catch((error: AxiosError) => {
+                    //this.message = error.message
+                    alert(error.message) // https://www.w3schools.com/js/js_popup.asp
+                })
+        },        
         deleteCar(deleteId: number) {
             let uri: string = baseUri + "/" + deleteId
             axios.delete<void>(uri)
@@ -296,16 +315,16 @@ new Vue({
                 })
         },
         addCar() {
-            axios.post<IRoot[]>(baseUri, this.formData)
-                .then((response: AxiosResponse) => {
-                    let message: string = "response " + response.status + " " + response.statusText
-                    this.addMessage = message
-                    this.getAllCars()
-                })
-                .catch((error: AxiosError) => {
-                    // this.addMessage = error.message
-                    alert(error.message)
-                })
+          axios.post<IRoot[]>(baseUri, this.formData)
+            .then((response: AxiosResponse) => {
+               let message: string = "response " + response.status + " " + response.statusText
+              this.addMessage = message
+              this.getAllCars()
+             })
+              .catch((error: AxiosError) => {
+                // this.addMessage = error.message
+                alert(error.message)
+              })
         }
     }
 
