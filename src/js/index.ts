@@ -258,7 +258,7 @@ interface Class {
   }
       
 
-let baseUri: string = "https://growproxy.azurewebsites.net/plants/?complete_data=true&token=Mm9iZ21HRkk2V1BhSTFLaUJQL0d5dz09"
+let baseUri: string = "https://growproxy.azurewebsites.net/plants?q=straw&token=Mm9iZ21HRkk2V1BhSTFLaUJQL0d5dz09&page_size=200"
 // let baseUri: string = "https://growproxy.azurewebsites.net/plants?q=Canna&token=Mm9iZ21HRkk2V1BhSTFLaUJQL0d5dz09"
  //let baseUri: string = "https://growproxy.azurewebsites.net/plants/135533?token=Mm9iZ21HRkk2V1BhSTFLaUJQL0d5dz09"
 
@@ -267,8 +267,8 @@ new Vue({
     el: "#app",
     data: {
         defaultPic: "https://d1nhio0ox7pgb.cloudfront.net/_img/g_collection_png/standard/512x512/plant.png",
-        cars: [],
-        carsSorted: [],
+        plants: [],
+        plantsSorted: [],
         errors: [],
         deleteId: 0,
         deleteMessage: "",
@@ -276,13 +276,13 @@ new Vue({
         addMessage: ""
     },
     methods: {
-        getAllCars() {
+        getAllPlants() {
             axios.get<IRoot[]>(baseUri)
                 .then((response: AxiosResponse<IRoot[]>) => {
                     console.log(response.statusText)
                     console.log(response.data)
-                    this.cars = response.data
-                   // this.cars.forEach((response.data) => { this.getPlantById(car.id)});
+                    this.plants = response.data
+                    this.plants.forEach((plant: { id: any }) => { this.getPlantById(plant.id)});
                 })
                 .catch((error: AxiosError) => {
                     //this.message = error.message
@@ -294,7 +294,8 @@ new Vue({
                 .then((response: AxiosResponse<IRoot[]>) => {
                     console.log(response.statusText)
                     console.log(response.data)
-                    this.carsSorted.push(response.data)
+                    if(response.data.images && response.data.common_name != null)
+                    this.plantsSorted.push(response.data)
                                           
                 })
                 .catch((error: AxiosError) => {
@@ -307,7 +308,7 @@ new Vue({
             axios.delete<void>(uri)
                 .then((response: AxiosResponse<void>) => {
                     this.deleteMessage = response.status + " " + response.statusText
-                    this.getAllCars()
+                    this.getAllPlants()
                 })
                 .catch((error: AxiosError) => {
                     //this.deleteMessage = error.message
@@ -319,7 +320,7 @@ new Vue({
             .then((response: AxiosResponse) => {
                let message: string = "response " + response.status + " " + response.statusText
               this.addMessage = message
-              this.getAllCars()
+              this.getAllPlants()
              })
               .catch((error: AxiosError) => {
                 // this.addMessage = error.message
