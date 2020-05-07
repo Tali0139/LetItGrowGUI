@@ -16,7 +16,7 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 
 
-  
+
 </head>
 
 <style>
@@ -31,12 +31,14 @@
 
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="#">
-      <img src="https://d1nhio0ox7pgb.cloudfront.net/_img/g_collection_png/standard/512x512/plant.png" width="30" height="30" alt="">
-    Let It Grow</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <img src="https://d1nhio0ox7pgb.cloudfront.net/_img/g_collection_png/standard/512x512/plant.png" width="30"
+        height="30" alt="">
+      Let It Grow</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-  
+
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item ">
@@ -45,7 +47,7 @@
         <li class="nav-item active">
           <a class="nav-link" href="#">Mine Planter</a>
         </li>
-        
+
         <li class="nav-item">
           <a class="nav-link" href="#">Min side</a>
         </li>
@@ -62,8 +64,14 @@
       <button v-on:click="getAllCars" class="btn btn-primary">Hent Planter</button>
 
       <div class="row">
-        <div class="col">
-          <h1>Mine Planter</h1>
+        <div style="width: 200px;" class="col-md">
+          <h1 class="h1">Mine Planter</h1>
+        </div>
+        <div style="width: 200px;" class="col-md">
+          <div class="alert alert-primary">
+            <p> Vejret i haven: Temp <a href="#" class="alert-link"> 30°C </a> Regn <a href="#" class="alert-link"> 1.mm
+              </a> Vindhastighed <a href="#" class="alert-link"> 11.m/s</a> </p>
+          </div>
         </div>
       </div>
 
@@ -97,21 +105,21 @@
                       </button>
                     </div>
                     <div class="modal-body">
-                      <p>LYS: Masser aflys er afgørende. I sommermånederne kan den blomstre i det 
-                      fri, men også om vinteren må den stå lyst. Den klarer sig bedre i vinterhaven end i stuen.</p>
+                      <p>LYS: Masser aflys er afgørende. I sommermånederne kan den blomstre i det
+                        fri, men også om vinteren må den stå lyst. Den klarer sig bedre i vinterhaven end i stuen.</p>
 
-                    <p> TEMPERATUR: Holder af varme og frisk luft. Om vinteren må temperaturen 
-                      helst ikke komme under 5°C. Trives ikke i tør centralvarmeluft.</p> 
+                      <p> TEMPERATUR: Holder af varme og frisk luft. Om vinteren må temperaturen
+                        helst ikke komme under 5°C. Trives ikke i tør centralvarmeluft.</p>
 
                       <p>VANDING: Vand regelmæssigt, næsten hver dag om sommeren. Om vinteren kun
-                         ca. hver 10. dag. Regnvand er det bedste, og det er vigtigt, at 
-                         vandet er lunt. Koldt vand kan hæmme knoppernes udspring. </p>
+                        ca. hver 10. dag. Regnvand er det bedste, og det er vigtigt, at
+                        vandet er lunt. Koldt vand kan hæmme knoppernes udspring. </p>
 
                       <p></p>GØDNING: Om sommeren flydende gødning hver 14. dag.</p>
                     </div>
                     <div class="modal-footer">
                       <button type="button" class="btn btn-secondary" data-dismiss="modal">Luk</button>
-                      
+
                     </div>
                   </div>
                 </div>
