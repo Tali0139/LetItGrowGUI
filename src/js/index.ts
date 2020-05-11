@@ -271,7 +271,7 @@ let baseUri: string = "https://growproxy.azurewebsites.net/plants?complete_data=
  //let baseUri: string = "https://growproxy.azurewebsites.net/plants/135533?token=Mm9iZ21HRkk2V1BhSTFLaUJQL0d5dz09"
 let weatherUri: string = "https://letitgrowweather.azurewebsites.net/api/weather"
 let searchUri: string =  "https://growproxy.azurewebsites.net/plants?q="
-let tokenString: string = "&token=Mm9iZ21HRkk2V1BhSTFLaUJQL0d5dz09&page_size=50"
+let tokenString: string = "&token=Mm9iZ21HRkk2V1BhSTFLaUJQL0d5dz09&page_size=200"
 
 
 new Vue({
@@ -292,6 +292,7 @@ new Vue({
         deleteMessage: "",
         formData: { model: "", vendor: "", price: 0 },
         addMessage: "",
+        searchString: ""
         
     },
 
@@ -313,28 +314,28 @@ new Vue({
         },
 
         getSearchPlants() {
-          let searchString = document.getElementById("SearchBar").innerText
-          console.log("Pik")
-          axios.get<IRoot[]>(searchUri+searchString+tokenString)
+          axios.get<IRoot[]>(searchUri+this.searchString+tokenString)
               .then((response: AxiosResponse<IRoot[]>) => {
                   console.log(response.statusText)
                   console.log(response.data)
-                  this.plantsSorted = response.data
-                  //this.plants.forEach((plant: { id: any }) => { this.getSpecificPlants(plant.id)})
+                  this.plantsSorted = []
+                  this.plants = response.data
+                  this.plants.forEach((plant: { id: any }) => { this.getSpecificPlants(plant.id)})
                   
               })
               .catch((error: AxiosError) => {
-                  //this.message = error.message
+                  this.message = error.message
+                  console.log(this.message)
                   //alert(error.message) // https://www.w3schools.com/js/js_popup.asp
               })
-      },
+        },
         //Get request til at finde hver plantes komplette information fra GetAllPlants
         getSpecificPlants(id: number) {
             axios.get<IRoot>("https://growproxy.azurewebsites.net/plants/" + id + "?" + "token=Mm9iZ21HRkk2V1BhSTFLaUJQL0d5dz09")
                 .then((response: AxiosResponse<IRoot>) => {
                     console.log(response.statusText)
                     console.log(response.data)
-                    if(response.data.images != null && response.data.common_name != null)
+                    if(response.data.images.length > 0 && response.data.common_name != null)
                     this.plantsSorted.push(response.data)
                                           
                 })
