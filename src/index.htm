@@ -3,32 +3,163 @@
 
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <title>Car Shop</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LetItGrow</title>
   <link rel="stylesheet" type="text/css" href="bundle.css" />
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-  
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+  <script src="https://code.iconify.design/1/1.0.6/iconify.min.js"></script>
+
 </head>
 
-<body>
-  <h1>Car Shop</h1>
-  <div id="app">
-    <h2>Get All</h2>
-    <button v-on:click="getAllCars" class="btn btn-primary">Get all cars</button>
+<style>
+  .card-img-top {
+    width: 100%;
+    height: 20vw;
+    object-fit: cover;
+  }
+</style>
 
-    <ul v-if="cars.length">
+<body>
+  <div id="app">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <a class="navbar-brand" href="#">
+        <img src="https://d1nhio0ox7pgb.cloudfront.net/_img/g_collection_png/standard/512x512/plant.png" width="30"
+          height="30" alt="">
+        Let It Grow</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" style="margin-left: 5em;" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item ">
+            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="#">Plants</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="MyPage.html">My page</a>
+          </li>
+        </ul>
+        <v-form @submit.prevent class="form-inline my-2 my-lg-0">
+          <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" id="SearchBar"
+            v-model="searchString">
+          <button v-on:click="getSearchPlants" id="getSearchPlantsButton"
+            class="btn btn-outline-success my-2 my-sm-0">Search</button>
+        </v-form>
+      </div>
+    </nav>
+    <div class="container">
+
+
+
+      <button v-on:click="getAllPlants" id="GetAllPlantsButton" style="margin-top: 1em;" class="btn btn-primary">Get all
+        plants</button>
+
+      <div class="row">
+        <div style="width: 100px;" class="col-md">
+          <h1 class="h1">List of plants</h1>
+        </div>
+        <div style="width: 500px;" class="col-md">
+          <div v-if="weatherData" class="alert alert-primary" style="margin-top: -3em;">
+            <p>Latest reading: {{weatherData[weatherData.length-1].measureTime}}, Location:
+              {{weatherData[weatherData.length-1].deviceLocation}}</p>
+            <p style="margin-top: 15px;"> Weather info: Temp <a href="#" class="alert-link">
+                {{weatherData[weatherData.length-1].randomTemperature}}°C </a> Rain <a href="#" class="alert-link">
+                {{weatherData[weatherData.length-1].rain}}.mm
+              </a> Wind speed <a href="#" class="alert-link"> {{weatherData[weatherData.length-1].windSpeed}}.m/s</a>
+            </p>
+
+            <div v-if="weatherData[weatherData.length-1].rain >= 1">
+              <span class="iconify" width="5em" data-icon="typcn-weather-downpour" data-inline="false"></span>
+            </div>
+            <div
+              v-else-if="weatherData[weatherData.length-1].rain <= 0 && weatherData[weatherData.length-1].randomTemperature >= 10  ">
+              <span class="iconify" width="5em" data-icon="typcn-weather-sunny" data-inline="false"></span>
+            </div>
+            <div
+              v-else-if="weatherData[weatherData.length-1].randomTemperature <= 10 && weatherData[weatherData.length-1].rain <= 0 ">
+              <span class="iconify" width="5em" data-icon="websymbol-cloud" data-inline="false"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="row">
+        <div class="card-deck" v-for="plant in plantsSorted" id="plantDeck" style="width: 450px;">
+          <div class="card" style="margin-left: 20px; margin-bottom: 20px;">
+            <div v-if="plant.images != 0">
+              <img class="card-img-top" :src="plant.images[0].url" alt="Card image cap">
+            </div>
+            <div class="card-body">
+
+              <h2 style="margin-top: -5px;">{{ plant.common_name}}</h2>
+              <p class="card-text"><i class="glyphicon glyphicon-certificate"></i> Minimum
+                Temp:{{plant.main_species.growth.temperature_minimum.deg_c}}°C</p>
+              <p class="card-text"><i class="glyphicon glyphicon-tint"></i> Watering needs:
+                {{plant.main_species.growth.moisture_use}}</p>
+              <p class="card-text"><i class="glyphicon glyphicon-grain"></i> Fertilisation requirements:
+                {{plant.main_species.growth.fertility_requirement}}</p>
+              <button type="button" class="btn btn-primary" data-toggle="modal"
+                data-target="#exampleModalCenter">Details</button>
+              <!-- Modal -->
+              <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+                aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLongTitle">{{ plant.scientific_name}}</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+
+                      <p>MINIMUM RAIN PRECIPITATION: {{plant.main_species.growth.precipitation_minimum.cm}} cm</p>
+
+                      <p>SEED PERSISTENCE: {{plant.main_species.fruit_or_seed.seed_persistence}}</p>
+
+                      <p>LIFESPAN: {{plant.main_species.specifications.lifespan}}</p>
+
+                      <p>MATURE HEIGHT: {{plant.main_species.specifications.mature_height.cm}} cm</p>
+
+                      <p>DROUGHT TOLERANCE: {{plant.main_species.growth.drought_tolerance}} </p>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Luk</button>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+
+    <!--<ul>
       <li v-for="car in cars">
-        {{car.id}} {{car.vendor}} : {{car.model }} {{ car.price}}
+        {{car.scientific_name}}
       </li>
-    </ul>
+   </ul>-->
     <!--span v-else>No cars</span-->
 
-    <h2>Delete</h2>
-    <input class="form-control" v-model.number="deleteId" placeholder="id" type="number"/>
+    <!-- <h2>Delete</h2>
+    <input class="form-control" v-model.number="deleteId" placeholder="id" type="number" />
     <button v-on:click="deleteCar(deleteId)" class="btn btn-warning">Delete</button>
     {{deleteMessage}}
 
@@ -38,8 +169,8 @@
     <input v-model.number="formData.price" placeholder="price" type="number" />
     <button v-on:click="addCar()" class="btn btn-success">Add</button>
     <div>{{addMessage}}</div>
-  </div>
-  <script src="bundle.js"></script>
+  </div> -->
+    <script src="bundle.js"></script>
 </body>
 
 </html>
