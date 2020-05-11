@@ -270,7 +270,7 @@ let baseUri: string = "https://growproxy.azurewebsites.net/plants?complete_data=
 // let baseUri: string = "https://growproxy.azurewebsites.net/plants?q=Canna&token=Mm9iZ21HRkk2V1BhSTFLaUJQL0d5dz09"
  //let baseUri: string = "https://growproxy.azurewebsites.net/plants/135533?token=Mm9iZ21HRkk2V1BhSTFLaUJQL0d5dz09"
 let weatherUri: string = "https://letitgrowweather.azurewebsites.net/api/weather"
-let searchUri: string =  "https://growproxy.azurewebsites.net/plants?q="
+let searchUri: string =  "https://growproxy.azurewebsites.net/plants/?q="
 let tokenString: string = "&token=Mm9iZ21HRkk2V1BhSTFLaUJQL0d5dz09&page_size=200"
 
 
@@ -314,6 +314,7 @@ new Vue({
         },
 
         getSearchPlants() {
+          console.log(this.searchString)
           axios.get<IRoot[]>(searchUri+this.searchString+tokenString)
               .then((response: AxiosResponse<IRoot[]>) => {
                   console.log(response.statusText)
