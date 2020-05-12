@@ -111,8 +111,8 @@
         </ul>
         <v-form @submit.prevent class="form-inline my-2 my-lg-0">
           <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" id="SearchBar"
-            v-model="searchString" v-on:keyup.enter="getSearchPlants" >
-          <button v-on:click="getSearchPlants" id="getSearchPlantsButton"
+            v-model="searchString" v-on:keyup.enter="getSearchPlants(); showAllPlantsDiv();" >
+          <button v-on:click="getSearchPlants(); showAllPlantsDiv();" id="getSearchPlantsButton"
             class="btn btn-outline-success my-2 my-sm-0">Search</button>
 
             
@@ -159,9 +159,7 @@
       <div class="row1">
         <div class="card-deck" v-for="plant in plantsSorted" id="plantDeck" style="width: 450px;">
           <div class="card" style="margin-left: 30px; margin-bottom: 20px; max-height: 680px; min-height: 640px; " >
-            <div v-if="plant.images != 0">
               <img class="card-img-top" :src="plant.images[0].url" alt="Card image cap">
-            </div>
             <div class="card-body">
 
               <h5 style="margin-top: -5px;">{{ plant.common_name}}</h5>

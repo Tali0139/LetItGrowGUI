@@ -274,12 +274,12 @@ interface IUser {
 
 
 
-let baseUri: string = "https://growproxy.azurewebsites.net/plants?complete_data=true&token=Mm9iZ21HRkk2V1BhSTFLaUJQL0d5dz09&page_size=50"
+let baseUri: string = "https://growproxy.azurewebsites.net/plants?complete_data=true&token=Mm9iZ21HRkk2V1BhSTFLaUJQL0d5dz09&page_size=100"
 // let baseUri: string = "https://growproxy.azurewebsites.net/plants?q=Canna&token=Mm9iZ21HRkk2V1BhSTFLaUJQL0d5dz09"
  //let baseUri: string = "https://growproxy.azurewebsites.net/plants/135533?token=Mm9iZ21HRkk2V1BhSTFLaUJQL0d5dz09"
 let weatherUri: string = "https://letitgrowweather.azurewebsites.net/api/weather"
 let searchUri: string =  "https://growproxy.azurewebsites.net/plants/?q="
-let tokenString: string = "&token=Mm9iZ21HRkk2V1BhSTFLaUJQL0d5dz09&page_size=200"
+let tokenString: string = "&token=Mm9iZ21HRkk2V1BhSTFLaUJQL0d5dz09&page_size=1000"
 let UsersUri: string = "https://letitgrowinmemory.azurewebsites.net/api/users"
 
 
@@ -341,8 +341,13 @@ new Vue({
                   console.log(response.data)
                   this.plantsSorted = []
                   this.plants = response.data
-                if(this.plants.length >= 1 && this.plants.images.length > 0){
-                  this.plants.forEach((plant: { id: any }) => { this.getSpecificPlants(plant.id)})
+                if(this.plants.length >= 1){
+                  this.plants.forEach((plant: {id: number, common_name: string}) => {
+                    if(plant.common_name != null){
+                      this.getSpecificPlants(plant.id)
+                    }})
+                 // if(this.plantsSorted.length < 1){
+                    //alert(this.searchString +" gave no results! - Try another searchphrase")} 
                 }
                 else{
                   alert(this.searchString +" gave no results! - Try another searchphrase")
@@ -360,8 +365,10 @@ new Vue({
                 .then((response: AxiosResponse<IRoot>) => {
                     console.log(response.statusText)
                     console.log(response.data)
-                    if(response.data.images.length > 0 && response.data.common_name != null)
-                    this.plantsSorted.push(response.data)
+                    if(response.data.images.length > 0 && response.data.common_name != null){
+                      this.plantsSorted.push(response.data)
+                    }
+                    
                                           
                 })
                 .catch((error: AxiosError) => {
