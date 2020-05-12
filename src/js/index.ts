@@ -274,6 +274,8 @@ let searchUri: string =  "https://growproxy.azurewebsites.net/plants/?q="
 let tokenString: string = "&token=Mm9iZ21HRkk2V1BhSTFLaUJQL0d5dz09&page_size=200"
 
 
+
+
 new Vue({
     el: "#app",
 
@@ -312,6 +314,12 @@ new Vue({
                     //alert(error.message) // https://www.w3schools.com/js/js_popup.asp
                 })
         },
+
+        showAllPlantsDiv() {
+            document.getElementById('showPlants').style.display = "block";
+        },
+
+      
 
         getSearchPlants() {
           console.log(this.searchString)
