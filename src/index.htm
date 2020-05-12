@@ -31,7 +31,6 @@
   width: 20%;
   max-width: 400px;
   }
-
   
   @media only screen and (max-width: 1199px){
     .col-auto {
@@ -39,13 +38,51 @@
     }
   }
 
+.logo:hover {
+  transform: rotate(10deg) scale(2.0);
+}
+
+.alert {
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  animation-name: example;
+  animation-duration: 0.25s;
+  border-left: 8px solid #8ab6e6;
+  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+}
+
+.alert:hover {
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  animation-name: example;
+  animation-duration: 0.25s;
+  border-left: 8px solid #8ab6e6;
+  box-shadow: 0 20px 35px rgba(0,0,0,0.25), 0 20px 20px rgba(0,0,0,0.22);
+}
+
+.btn {
+  animation-name: example;
+  animation-duration: 0.25s;
+  box-shadow: 0 5px 10px rgba(0,0,0,0.25), 0 5px 5px rgba(0,0,0,0.22);
+}
+
+.card {
+  animation-name: example;
+  animation-duration: 0.25s;
+  box-shadow: 0 20px 35px rgba(0,0,0,0.1), 0 20px 20px rgba(0,0,0,0.22);
+}
+
+.card-text {
+  font-size: small;
+}
+
 </style>
 
 <body>
   <div id="app">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <a class="navbar-brand" href="#">
-        <img src="https://d1nhio0ox7pgb.cloudfront.net/_img/g_collection_png/standard/512x512/plant.png" width="30"
+        <img class="logo" style="margin-bottom: 12px;"  src="https://i.imgur.com/ojRIguR.png" width="30"
           height="30" alt="">
         Let It Grow</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -67,30 +104,33 @@
         </ul>
         <v-form @submit.prevent class="form-inline my-2 my-lg-0">
           <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" id="SearchBar"
-            v-model="searchString">
+            v-model="searchString" v-on:keyup.enter="getSearchPlants" >
           <button v-on:click="getSearchPlants" id="getSearchPlantsButton"
             class="btn btn-outline-success my-2 my-sm-0">Search</button>
+
+            
+
         </v-form>
       </div>
     </nav>
     <div class="container">
 
 
-      <h2 class="h2-plant" >Want to get a list of all plants?</h2>
-      <button v-on:click="getAllPlants(); showAllPlantsDiv();" id="GetAllPlantsButton" style="margin-top: 1em;" class="btn btn-primary">Click here!</button>
+      <h2 class="h2-plant" style="margin-top: 0.2em; margin-left: 12px; " >Want to get a list of all plants?</h2>
+      <button v-on:click="getAllPlants(); showAllPlantsDiv();" id="GetAllPlantsButton" style="margin-top: 1em; margin-left: 12px;" class="btn btn-primary">Click here!</button>
 
       <div class="row">
         <div style="width: 100px; min-width: 50%;" class="col-md">
-          <h1 id="showPlants"  class="h1-plant" style="margin-top: 3.5em; display: none; word-wrap:normal;"  >List of plants</h1>
+          <h1 id="showPlants"  class="h1-plant" style="margin-top: 3.5em; margin-left: 12px; display: none; word-wrap:normal;"  >List of plants</h1>
         </div>
         <div style="width: 500px;" class="col-auto">
-          <div v-if="weatherData" class="alert alert-primary" style="margin-top: -6em;">
-            <p>Latest reading: {{weatherData[weatherData.length-1].measureTime}}, Location:
-              {{weatherData[weatherData.length-1].deviceLocation}}</p>
-            <p style="margin-top: 15px;"> Weather info: Temp <a class="alert-link">
-                {{weatherData[weatherData.length-1].randomTemperature}}°C </a> Rain <a class="alert-link">
+          <div v-if="weatherData" class="alert alert-primary" style=" margin-left: 1em; margin-top: -5.5em;">
+            <p><u>Latest reading</u>: <a class="alert-link" >{{weatherData[weatherData.length-1].measureTime}}</a>, Location: <a class="alert-link" >
+              {{weatherData[weatherData.length-1].deviceLocation}}</a>
+            <p style="margin-top: 15px;"> <u>Weather info</u>: Temp:<a class="alert-link">
+                {{weatherData[weatherData.length-1].randomTemperature}}°C </a>|    Rain: <a class="alert-link">
                 {{weatherData[weatherData.length-1].rain}}.mm
-              </a> Wind speed <a class="alert-link"> {{weatherData[weatherData.length-1].windSpeed}}.m/s</a>
+              </a>|    Wind speed: <a class="alert-link"> {{weatherData[weatherData.length-1].windSpeed}}.m/s</a>
             </p>
 
             <div v-if="weatherData[weatherData.length-1].rain >= 1">
@@ -111,20 +151,20 @@
 
       <div class="row1">
         <div class="card-deck" v-for="plant in plantsSorted" id="plantDeck" style="width: 450px;">
-          <div class="card" style="margin-left: 20px; margin-bottom: 20px;">
+          <div class="card" style="margin-left: 30px; margin-bottom: 20px; max-height: 680px; min-height: 640px; " >
             <div v-if="plant.images != 0">
               <img class="card-img-top" :src="plant.images[0].url" alt="Card image cap">
             </div>
             <div class="card-body">
 
-              <h2 style="margin-top: -5px;">{{ plant.common_name}}</h2>
+              <h5 style="margin-top: -5px;">{{ plant.common_name}}</h5>
               <p class="card-text"><i class="glyphicon glyphicon-certificate"></i> Minimum
                 Temp:{{plant.main_species.growth.temperature_minimum.deg_c}}°C</p>
               <p class="card-text"><i class="glyphicon glyphicon-tint"></i> Watering needs:
                 {{plant.main_species.growth.moisture_use}}</p>
               <p class="card-text"><i class="glyphicon glyphicon-grain"></i> Fertilisation requirements:
                 {{plant.main_species.growth.fertility_requirement}}</p>
-              <button type="button" class="btn btn-primary" data-toggle="modal"
+              <button type="button" class="btn btn-primary" style="margin-top: 2em;" data-toggle="modal"
                 data-target="#exampleModalCenter">Details</button>
               <!-- Modal -->
               <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
