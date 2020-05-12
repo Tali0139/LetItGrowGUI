@@ -32,6 +32,12 @@
   max-width: 400px;
   }
 
+  
+  @media only screen and (max-width: 1199px){
+    .col-auto {
+      display: none;
+    }
+  }
 
 </style>
 
@@ -70,22 +76,21 @@
     <div class="container">
 
 
-
-      <button v-on:click="getAllPlants" id="GetAllPlantsButton" style="margin-top: 1em;" class="btn btn-primary">Get all
-        plants</button>
+      <h2 class="h2-plant" >Want to get a list of all plants?</h2>
+      <button v-on:click="getAllPlants(); showAllPlantsDiv();" id="GetAllPlantsButton" style="margin-top: 1em;" class="btn btn-primary">Click here!</button>
 
       <div class="row">
-        <div style="width: 100px;" class="col-md">
-          <h1 class="h1">List of plants</h1>
+        <div style="width: 100px; min-width: 50%;" class="col-md">
+          <h1 id="showPlants"  class="h1-plant" style="margin-top: 3.5em; display: none; word-wrap:normal;"  >List of plants</h1>
         </div>
-        <div style="width: 500px;" class="col-md">
-          <div v-if="weatherData" class="alert alert-primary" style="margin-top: -3em;">
+        <div style="width: 500px;" class="col-auto">
+          <div v-if="weatherData" class="alert alert-primary" style="margin-top: -6em;">
             <p>Latest reading: {{weatherData[weatherData.length-1].measureTime}}, Location:
               {{weatherData[weatherData.length-1].deviceLocation}}</p>
-            <p style="margin-top: 15px;"> Weather info: Temp <a href="#" class="alert-link">
-                {{weatherData[weatherData.length-1].randomTemperature}}°C </a> Rain <a href="#" class="alert-link">
+            <p style="margin-top: 15px;"> Weather info: Temp <a class="alert-link">
+                {{weatherData[weatherData.length-1].randomTemperature}}°C </a> Rain <a class="alert-link">
                 {{weatherData[weatherData.length-1].rain}}.mm
-              </a> Wind speed <a href="#" class="alert-link"> {{weatherData[weatherData.length-1].windSpeed}}.m/s</a>
+              </a> Wind speed <a class="alert-link"> {{weatherData[weatherData.length-1].windSpeed}}.m/s</a>
             </p>
 
             <div v-if="weatherData[weatherData.length-1].rain >= 1">
@@ -104,7 +109,7 @@
       </div>
 
 
-      <div class="row">
+      <div class="row1">
         <div class="card-deck" v-for="plant in plantsSorted" id="plantDeck" style="width: 450px;">
           <div class="card" style="margin-left: 20px; margin-bottom: 20px;">
             <div v-if="plant.images != 0">

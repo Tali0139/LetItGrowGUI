@@ -313,6 +313,10 @@ new Vue({
                 })
         },
 
+        showAllPlantsDiv() {
+            document.getElementById('showPlants').style.display = "block";
+        },
+
         getSearchPlants() {
           console.log(this.searchString)
           axios.get<IRoot[]>(searchUri+this.searchString+tokenString)
