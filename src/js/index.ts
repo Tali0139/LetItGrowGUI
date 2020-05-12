@@ -265,6 +265,14 @@ interface Class {
     windSpeed: number;
 }
 
+interface IUser {
+  id: number;
+  username: string;
+  password: string;
+  email: string;
+}
+
+
 
 let baseUri: string = "https://growproxy.azurewebsites.net/plants?complete_data=true&token=Mm9iZ21HRkk2V1BhSTFLaUJQL0d5dz09&page_size=50"
 // let baseUri: string = "https://growproxy.azurewebsites.net/plants?q=Canna&token=Mm9iZ21HRkk2V1BhSTFLaUJQL0d5dz09"
@@ -272,7 +280,7 @@ let baseUri: string = "https://growproxy.azurewebsites.net/plants?complete_data=
 let weatherUri: string = "https://letitgrowweather.azurewebsites.net/api/weather"
 let searchUri: string =  "https://growproxy.azurewebsites.net/plants/?q="
 let tokenString: string = "&token=Mm9iZ21HRkk2V1BhSTFLaUJQL0d5dz09&page_size=200"
-
+let UsersUri: string = "https://letitgrowinmemory.azurewebsites.net/api/users"
 
 
 
@@ -294,7 +302,11 @@ new Vue({
         deleteMessage: "",
         formData: { model: "", vendor: "", price: 0 },
         addMessage: "",
-        searchString: ""
+        searchString: "",
+        users: [],
+        loggedInUser: [] ,
+        username: "",
+        password: ""
         
     },
 
@@ -329,7 +341,7 @@ new Vue({
                   console.log(response.data)
                   this.plantsSorted = []
                   this.plants = response.data
-                if(this.plants.length >= 1 ){
+                if(this.plants.length >= 1 && this.plants.images.length > 0){
                   this.plants.forEach((plant: { id: any }) => { this.getSpecificPlants(plant.id)})
                 }
                 else{
@@ -371,6 +383,28 @@ new Vue({
                   //alert(error.message) // https://www.w3schools.com/js/js_popup.asp
               })
       },
+
+      loginUser() {
+        axios.get<IUser[]>(UsersUri)
+        .then((response: AxiosResponse<IUser[]>) => {
+          console.log(response.statusText)
+          this.users = response.data
+          console.log("getAllUsers called")
+          console.log(this.username)
+          console.log(this.password)
+          this.users.forEach((user: IUser) => { if(this.username == user.username && this.password == user.password){
+          this.loggedInUser = user
+          console.log("User:" + this.loggedInUser.username + " Logged in")
+          }
+      
+        })
+          
+      })
+            .catch((error: AxiosError) => {
+                //this.message = error.message
+                //alert(error.message) // https://www.w3schools.com/js/js_popup.asp
+            })
+    },
         
         deleteCar(deleteId: number) {
             let uri: string = baseUri + "/" + deleteId
