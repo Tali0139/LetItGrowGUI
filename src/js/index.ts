@@ -321,8 +321,12 @@ new Vue({
                   console.log(response.data)
                   this.plantsSorted = []
                   this.plants = response.data
+                if(this.plants.length >= 1 ){
                   this.plants.forEach((plant: { id: any }) => { this.getSpecificPlants(plant.id)})
-                  
+                }
+                else{
+                  alert("Search gave no results! - Try another searchphrase")
+                }
               })
               .catch((error: AxiosError) => {
                   this.message = error.message
@@ -330,7 +334,7 @@ new Vue({
                   //alert(error.message) // https://www.w3schools.com/js/js_popup.asp
               })
         },
-        //Get request til at finde hver plantes komplette information fra GetAllPlants
+        //Get request til at finde hver plantes komplette information fra GetAllPlants eller getSearchPlant
         getSpecificPlants(id: number) {
             axios.get<IRoot>("https://growproxy.azurewebsites.net/plants/" + id + "?" + "token=Mm9iZ21HRkk2V1BhSTFLaUJQL0d5dz09")
                 .then((response: AxiosResponse<IRoot>) => {
