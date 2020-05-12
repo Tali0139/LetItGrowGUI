@@ -325,7 +325,7 @@ new Vue({
                   this.plants.forEach((plant: { id: any }) => { this.getSpecificPlants(plant.id)})
                 }
                 else{
-                  alert("Search gave no results! - Try another searchphrase")
+                  alert(this.searchString +" gave no results! - Try another searchphrase")
                 }
               })
               .catch((error: AxiosError) => {
