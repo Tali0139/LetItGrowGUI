@@ -405,6 +405,9 @@ new Vue({
           }
       
         })
+        if(this.loggedInUser.length < 1){
+          alert("Wrong username or password")
+        }
           
       })
             .catch((error: AxiosError) => {
