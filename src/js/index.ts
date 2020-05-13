@@ -440,6 +440,10 @@ new Vue({
                 alert(error.message)
               })
         }
-    }
+    },
+
+        displayDiv(){
+          document.getElementById('jegergemt').style.display = "block";
+       }
 
 })
