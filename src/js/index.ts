@@ -270,6 +270,7 @@ interface IUser {
   username: string;
   password: string;
   email: string;
+  plants: [];  
 }
 
 
@@ -304,7 +305,7 @@ new Vue({
         addMessage: "",
         searchString: "",
         users: [],
-        loggedInUser: [] ,
+        loggedInUser: [],
         username: "",
         password: ""
         
@@ -405,10 +406,15 @@ new Vue({
           console.log(this.username)
           console.log(this.password)
           this.users.forEach((user: IUser) => { if(this.username == user.username && this.password == user.password){
-          this.loggedInUser = user
-          console.log("User:" + this.loggedInUser.username + " Logged in")
-          document.getElementById('loginDiv').style.display = "none";
-          document.getElementById('plantCardDiv').style.display = "block";
+              this.loggedInUser = user
+              console.log("User:" + this.loggedInUser.username + " Logged in")
+              this.getAllPlants()
+              //this.loggedInUser.plants.forEach((plant: string) => { this.getSpecificPlants(plant)});
+
+              
+          document.getElementById('loginDiv').style.display = "none"
+          document.getElementById('welcomeMessage').style.display = "block"
+          document.getElementById('usersPlants').style.display = "block"
           }
       
         })
