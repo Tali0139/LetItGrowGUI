@@ -391,6 +391,11 @@ new Vue({
               })
       },
 
+      displayDiv() {
+        document.getElementById('jegergemt').style.display = "block";
+        console.log("Div er flot")
+     },
+
       loginUser() {
         axios.get<IUser[]>(UsersUri)
         .then((response: AxiosResponse<IUser[]>) => {
@@ -402,6 +407,8 @@ new Vue({
           this.users.forEach((user: IUser) => { if(this.username == user.username && this.password == user.password){
           this.loggedInUser = user
           console.log("User:" + this.loggedInUser.username + " Logged in")
+          document.getElementById('loginDiv').style.display = "none";
+          document.getElementById('plantCardDiv').style.display = "block";
           }
       
         })
@@ -416,7 +423,7 @@ new Vue({
             })
     },
         
-        deleteCar(deleteId: number) {
+        deletePlant(deleteId: number) {
             let uri: string = baseUri + "/" + deleteId
             axios.delete<void>(uri)
                 .then((response: AxiosResponse<void>) => {
@@ -428,7 +435,7 @@ new Vue({
                     alert(error.message)
                 })
         },
-        addCar() {
+        addPlant() {
           axios.post<IRoot[]>(baseUri, this.formData)
             .then((response: AxiosResponse) => {
                let message: string = "response " + response.status + " " + response.statusText
@@ -440,10 +447,5 @@ new Vue({
                 alert(error.message)
               })
         }
-    },
-
-        displayDiv(){
-          document.getElementById('jegergemt').style.display = "block";
-       }
-
+    }
 })
