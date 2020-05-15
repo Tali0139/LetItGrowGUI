@@ -258,11 +258,16 @@ interface Class {
   }
   
   interface IPiWeatherData {
-    measureTime: Date;
+    measureTime: any;
     deviceLocation: string;
     randomTemperature: number;
     rain: number;
     windSpeed: number;
+}
+
+interface IPlants{
+  id: number;
+  plantAPIid: string;
 }
 
 interface IUser {
@@ -270,7 +275,7 @@ interface IUser {
   username: string;
   password: string;
   email: string;
-  plants: [];  
+  plants: IPlants [];  
 }
 
 
@@ -281,7 +286,8 @@ let baseUri: string = "https://growproxy.azurewebsites.net/plants?complete_data=
 let weatherUri: string = "https://letitgrowweather.azurewebsites.net/api/weather"
 let searchUri: string =  "https://growproxy.azurewebsites.net/plants/?q="
 let tokenString: string = "&token=Mm9iZ21HRkk2V1BhSTFLaUJQL0d5dz09&page_size=1000"
-let UsersUri: string = "https://letitgrowinmemory.azurewebsites.net/api/users"
+let UsersUri: string = "https://letitgrowinmemorydb.azurewebsites.net/api/users"
+let backupWeatherdata: IPiWeatherData = {randomTemperature:  10, measureTime: Date.now(),rain: 2,windSpeed: 10, deviceLocation: "The shed" }
 
 
 
@@ -289,7 +295,9 @@ new Vue({
     el: "#app",
 
     mounted: function(){
-      this.getWeatherData()
+      this.weatherData = backupWeatherdata
+      setInterval(this.getWeatherData(), 60000)
+      
       
     },
 
@@ -383,12 +391,15 @@ new Vue({
               .then((response: AxiosResponse<IPiWeatherData[]>) => {
                   console.log(response.statusText)
                   console.log(response.data)
-                  this.weatherData = response.data
-                  setInterval(this.getWeatherData, 60000)
+                  if(response.data.length > 0){this.weatherData = response.data}
+                                 
               })
               .catch((error: AxiosError) => {
-                  //this.message = error.message
+                  this.message = error.message
                   //alert(error.message) // https://www.w3schools.com/js/js_popup.asp
+                  console.log(this.message)
+                 
+                 this.weatherData = backupWeatherdata
               })
       },
 
@@ -408,13 +419,15 @@ new Vue({
           this.users.forEach((user: IUser) => { if(this.username == user.username && this.password == user.password){
               this.loggedInUser = user
               console.log("User:" + this.loggedInUser.username + " Logged in")
-              this.getAllPlants()
-              //this.loggedInUser.plants.forEach((plant: string) => { this.getSpecificPlants(plant)});
+              console.log(this.loggedInUser.plants)
+             // this.getAllPlants()
+             this.loggedInUser.plants.forEach((plant: IPlants) => { this.getSpecificPlants(plant.plantAPIid)});
 
               
           document.getElementById('loginDiv').style.display = "none"
           document.getElementById('welcomeMessage').style.display = "block"
           document.getElementById('usersPlants').style.display = "block"
+          document.getElementById('weatherWidget').style.display = "block"
           }
       
         })
