@@ -418,6 +418,7 @@ new Vue({
           console.log(this.password)
           this.users.forEach((user: IUser) => { if(this.username == user.username && this.password == user.password){
               this.loggedInUser = user
+              //this.loggedInUser.username = this.loggedInUser.username.capitalize();
               console.log("User:" + this.loggedInUser.username + " Logged in")
               console.log(this.loggedInUser.plants)
              // this.getAllPlants()
