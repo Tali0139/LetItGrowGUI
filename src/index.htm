@@ -16,6 +16,10 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
   <script src="https://code.iconify.design/1/1.0.6/iconify.min.js"></script>
 
+  <script>
+    !function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = 'https://weatherwidget.io/js/widget.min.js'; fjs.parentNode.insertBefore(js, fjs); } }(document, 'script', 'weatherwidget-io-js');
+  </script>
+
 </head>
 
 <style>
@@ -124,42 +128,22 @@
 
 
     <div class="container">
-  
+      <div class="row">
+        <div class="column" style="width: 100%">
+          <a style="margin-left: 12px;" class="weatherwidget-io" href="https://forecast7.com/en/44d35n87d83/denmark/"
+          data-label_1="Roskilde" data-label_2="Denmark" data-icons="Climacons Animated" data-days="3"
+          data-shadow="rgba(255, 255, 255, 0)" data-highcolor="#ff0000" data-lowcolor="rgba(0, 75, 255, 0.72)"
+          data-suncolor="#f9b756" data-mooncolor="#dcda4e" data-cloudcolor="#a5a5a5" data-cloudfill="#a5a5a5"
+          data-raincolor="#3cc8ff" data-snowcolor="#c9c9c9"  >Roskilde Denmark</a>
+        </div>
+      </div>
+
+      
       <h2 class="h2-plant" style="margin-top: 0.2em; margin-left: 12px; " >Want to get a list of all plants?</h2>
       <button v-on:click="getAllPlants(); showAllPlantsDiv();" id="GetAllPlantsButton" style="margin-top: 1em; margin-left: 12px;" class="btn btn-primary">Click here!</button>
 
       <div class="row">
-        <div style="width: 100px; min-width: 50%;" class="col-md">
-          <h1 id="showPlants"  class="h1-plant" style="margin-top: 3.5em; margin-left: 12px; display: none; word-wrap:normal;"  >List of plants</h1>
-        </div>
-        <div style="width: 500px;" class="col-auto">
-          <div v-if="weatherData" class="alert alert-primary" style=" margin-left: 1em; margin-top: -5.5em;">
-            <p><u>Latest reading</u>: <a class="alert-link" >{{weatherData[weatherData.length-1].measureTime}}</a>, Location: <a class="alert-link" >
-              {{weatherData[weatherData.length-1].deviceLocation}}</a>
-            <p style="margin-top: 15px;"> <u>Weather info</u>: Temp:<a class="alert-link">
-                {{weatherData[weatherData.length-1].randomTemperature}}°C </a>|    Rain: <a class="alert-link">
-                {{weatherData[weatherData.length-1].rain}}.mm
-              </a>|    Wind speed: <a class="alert-link"> {{weatherData[weatherData.length-1].windSpeed}}.m/s</a>
-            </p>
-
-            <div v-if="weatherData[weatherData.length-1].rain >= 1">
-              <span class="iconify" width="5em" data-icon="typcn-weather-downpour" data-inline="false"></span>
-            </div>
-            <div
-              v-else-if="weatherData[weatherData.length-1].rain <= 0 && weatherData[weatherData.length-1].randomTemperature >= 10  ">
-              <span class="iconify" width="5em" data-icon="typcn-weather-sunny" data-inline="false"></span>
-            </div>
-            <div
-              v-else-if="weatherData[weatherData.length-1].randomTemperature <= 10 && weatherData[weatherData.length-1].rain <= 0 ">
-              <span class="iconify" width="5em" data-icon="websymbol-cloud" data-inline="false"></span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-
-      <div class="row1">
-        <div class="card-deck" v-for="plant in plantsSorted" id="plantDeck" style="width: 450px;">
+        <div class="card-deck" v-for="plant in plantsSorted" id="plantDeck" style="width: 450px; margin-top: 1em;">
           <div class="card" style="margin-left: 30px; margin-bottom: 20px; max-height: 680px; min-height: 640px; " >
               <img class="card-img-top" :src="plant.images[0].url" alt="Card image cap">
             <div class="card-body">
