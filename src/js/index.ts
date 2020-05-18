@@ -258,27 +258,46 @@ interface Class {
   }
   
   interface IPiWeatherData {
-    measureTime: Date;
+    measureTime: any;
     deviceLocation: string;
     randomTemperature: number;
     rain: number;
     windSpeed: number;
 }
 
+interface IPlants{
+  id: number;
+  plantAPIid: string;
+}
 
-let baseUri: string = "https://growproxy.azurewebsites.net/plants?complete_data=true&token=Mm9iZ21HRkk2V1BhSTFLaUJQL0d5dz09&page_size=50"
+interface IUser {
+  id: number;
+  username: string;
+  password: string;
+  email: string;
+  plants: IPlants [];  
+}
+
+
+
+let baseUri: string = "https://growproxy.azurewebsites.net/plants?complete_data=true&token=Mm9iZ21HRkk2V1BhSTFLaUJQL0d5dz09&page_size=100"
 // let baseUri: string = "https://growproxy.azurewebsites.net/plants?q=Canna&token=Mm9iZ21HRkk2V1BhSTFLaUJQL0d5dz09"
  //let baseUri: string = "https://growproxy.azurewebsites.net/plants/135533?token=Mm9iZ21HRkk2V1BhSTFLaUJQL0d5dz09"
 let weatherUri: string = "https://letitgrowweather.azurewebsites.net/api/weather"
 let searchUri: string =  "https://growproxy.azurewebsites.net/plants/?q="
-let tokenString: string = "&token=Mm9iZ21HRkk2V1BhSTFLaUJQL0d5dz09&page_size=200"
+let tokenString: string = "&token=Mm9iZ21HRkk2V1BhSTFLaUJQL0d5dz09&page_size=1000"
+let UsersUri: string = "https://letitgrowinmemorydb.azurewebsites.net/api/users"
+let backupWeatherdata: IPiWeatherData = {randomTemperature:  10, measureTime: Date.now(),rain: 2,windSpeed: 10, deviceLocation: "The shed" }
+
 
 
 new Vue({
     el: "#app",
 
     mounted: function(){
-      this.getWeatherData()
+      this.weatherData = backupWeatherdata
+      setInterval(this.getWeatherData(), 60000)
+      
       
     },
 
@@ -292,7 +311,11 @@ new Vue({
         deleteMessage: "",
         formData: { model: "", vendor: "", price: 0 },
         addMessage: "",
-        searchString: ""
+        searchString: "",
+        users: [],
+        loggedInUser: [],
+        username: "",
+        password: ""
         
     },
 
@@ -313,6 +336,12 @@ new Vue({
                 })
         },
 
+        showAllPlantsDiv() {
+            document.getElementById('showPlants').style.display = "block";
+        },
+
+      
+
         getSearchPlants() {
           console.log(this.searchString)
           axios.get<IRoot[]>(searchUri+this.searchString+tokenString)
@@ -321,8 +350,17 @@ new Vue({
                   console.log(response.data)
                   this.plantsSorted = []
                   this.plants = response.data
-                  this.plants.forEach((plant: { id: any }) => { this.getSpecificPlants(plant.id)})
-                  
+                if(this.plants.length >= 1){
+                  this.plants.forEach((plant: {id: number, common_name: string}) => {
+                    if(plant.common_name != null){
+                      this.getSpecificPlants(plant.id)
+                    }})
+                 // if(this.plantsSorted.length < 1){
+                    //alert(this.searchString +" gave no results! - Try another searchphrase")} 
+                }
+                else{
+                  alert(this.searchString +" gave no results! - Try another searchphrase")
+                }
               })
               .catch((error: AxiosError) => {
                   this.message = error.message
@@ -330,14 +368,16 @@ new Vue({
                   //alert(error.message) // https://www.w3schools.com/js/js_popup.asp
               })
         },
-        //Get request til at finde hver plantes komplette information fra GetAllPlants
+        //Get request til at finde hver plantes komplette information fra GetAllPlants eller getSearchPlant
         getSpecificPlants(id: number) {
             axios.get<IRoot>("https://growproxy.azurewebsites.net/plants/" + id + "?" + "token=Mm9iZ21HRkk2V1BhSTFLaUJQL0d5dz09")
                 .then((response: AxiosResponse<IRoot>) => {
                     console.log(response.statusText)
                     console.log(response.data)
-                    if(response.data.images.length > 0 && response.data.common_name != null)
-                    this.plantsSorted.push(response.data)
+                    if(response.data.images.length > 0 && response.data.common_name != null){
+                      this.plantsSorted.push(response.data)
+                    }
+                    
                                           
                 })
                 .catch((error: AxiosError) => {
@@ -351,16 +391,59 @@ new Vue({
               .then((response: AxiosResponse<IPiWeatherData[]>) => {
                   console.log(response.statusText)
                   console.log(response.data)
-                  this.weatherData = response.data
-                  setInterval(this.getWeatherData, 60000)
+                  if(response.data.length > 0){this.weatherData = response.data}
+                                 
               })
               .catch((error: AxiosError) => {
-                  //this.message = error.message
+                  this.message = error.message
                   //alert(error.message) // https://www.w3schools.com/js/js_popup.asp
+                  console.log(this.message)
+                 
+                 this.weatherData = backupWeatherdata
               })
       },
+
+      displayDiv() {
+        document.getElementById('jegergemt').style.display = "block";
+        console.log("Div er flot")
+     },
+
+      loginUser() {
+        axios.get<IUser[]>(UsersUri)
+        .then((response: AxiosResponse<IUser[]>) => {
+          console.log(response.statusText)
+          this.users = response.data
+          console.log("getAllUsers called")
+          console.log(this.username)
+          console.log(this.password)
+          this.users.forEach((user: IUser) => { if(this.username == user.username && this.password == user.password){
+              this.loggedInUser = user
+              //this.loggedInUser.username = this.loggedInUser.username.capitalize();
+              console.log("User:" + this.loggedInUser.username + " Logged in")
+              console.log(this.loggedInUser.plants)
+             // this.getAllPlants()
+             this.loggedInUser.plants.forEach((plant: IPlants) => { this.getSpecificPlants(plant.plantAPIid)});
+
+              
+          document.getElementById('loginDiv').style.display = "none"
+          document.getElementById('welcomeMessage').style.display = "block"
+          document.getElementById('usersPlants').style.display = "block"
+          document.getElementById('weatherWidget').style.display = "block"
+          }
+      
+        })
+        if(this.loggedInUser.length < 1){
+          alert("Wrong username or password")
+        }
+          
+      })
+            .catch((error: AxiosError) => {
+                //this.message = error.message
+                //alert(error.message) // https://www.w3schools.com/js/js_popup.asp
+            })
+    },
         
-        deleteCar(deleteId: number) {
+        deletePlant(deleteId: number) {
             let uri: string = baseUri + "/" + deleteId
             axios.delete<void>(uri)
                 .then((response: AxiosResponse<void>) => {
@@ -372,7 +455,7 @@ new Vue({
                     alert(error.message)
                 })
         },
-        addCar() {
+        addPlant() {
           axios.post<IRoot[]>(baseUri, this.formData)
             .then((response: AxiosResponse) => {
                let message: string = "response " + response.status + " " + response.statusText
@@ -385,5 +468,4 @@ new Vue({
               })
         }
     }
-
 })
