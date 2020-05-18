@@ -297,6 +297,9 @@ new Vue({
     mounted: function(){
       this.weatherData = backupWeatherdata
       setInterval(this.getWeatherData(), 60000)
+
+      setInterval(this.plantTempAlert(), 1000)
+      
       
       
     },
@@ -403,10 +406,11 @@ new Vue({
               })
       },
 
-      displayDiv() {
-        document.getElementById('jegergemt').style.display = "block";
-        console.log("Div er flot")
-     },
+      // DisplayPersonalWeather(){
+      //   document.getElementById('personalWeather').style.display = "block"
+      // },
+
+   
 
       loginUser() {
         axios.get<IUser[]>(UsersUri)
@@ -427,8 +431,13 @@ new Vue({
               
           document.getElementById('loginDiv').style.display = "none"
           document.getElementById('welcomeMessage').style.display = "block"
-          document.getElementById('usersPlants').style.display = "block"
-          document.getElementById('weatherWidget').style.display = "block"
+          // document.getElementById('usersPlants').style.display = "block"
+          // document.getElementById('weatherWidget').style.display = "block"
+          document.getElementById('personalWeather').style.display = "block"
+          document.getElementById('welcomeMessage').style.marginTop = "-6em"
+          
+            
+          
           }
       
         })
@@ -440,8 +449,21 @@ new Vue({
             .catch((error: AxiosError) => {
                 //this.message = error.message
                 //alert(error.message) // https://www.w3schools.com/js/js_popup.asp
-            })
+            })  
     },
+
+    plantTempAlert(){
+      console.log("YESSS")
+      this.plantsSorted.forEach((plant: IRoot) => { if (plant.main_species.growth.temperature_minimum.deg_c > -10 && plant.main_species.growth.temperature_minimum.deg_c != null)
+        {
+        alert("Its to cold. Bring your " + plant.common_name +"inside"  )
+      }});
+    },
+
+
+
+
+
         
         deletePlant(deleteId: number) {
             let uri: string = baseUri + "/" + deleteId
@@ -455,6 +477,9 @@ new Vue({
                     alert(error.message)
                 })
         },
+
+       
+
         addPlant() {
           axios.post<IRoot[]>(baseUri, this.formData)
             .then((response: AxiosResponse) => {
@@ -467,5 +492,7 @@ new Vue({
                 alert(error.message)
               })
         }
+
+       
     }
 })
