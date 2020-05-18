@@ -431,7 +431,7 @@ new Vue({
           // document.getElementById('usersPlants').style.display = "block"
           // document.getElementById('weatherWidget').style.display = "block"
           document.getElementById('personalWeather').style.display = "block"
-          document.getElementById('welcomeMessage').style.marginTop = "-6.5em"
+          document.getElementById('welcomeMessage').style.marginTop = "-6em"
           }
       
         })
@@ -443,8 +443,23 @@ new Vue({
             .catch((error: AxiosError) => {
                 //this.message = error.message
                 //alert(error.message) // https://www.w3schools.com/js/js_popup.asp
-            })
+            })  
     },
+
+    plantTempAlert(){
+      this.loggedInUser.plants.forEach((plant: IPlants) => { this.getSpecificPlants(plant.plantAPIid)});
+     if (this.plant.temperature_minimum > this.weatherData.randomTemperature)
+       {
+       alert("Its to cold. Bring your " + this.plant.common_name +"inside"  )
+     }
+    
+       
+    },
+
+
+
+
+
         
         deletePlant(deleteId: number) {
             let uri: string = baseUri + "/" + deleteId
@@ -458,6 +473,9 @@ new Vue({
                     alert(error.message)
                 })
         },
+
+       
+
         addPlant() {
           axios.post<IRoot[]>(baseUri, this.formData)
             .then((response: AxiosResponse) => {
@@ -470,5 +488,7 @@ new Vue({
                 alert(error.message)
               })
         }
+
+       
     }
 })
