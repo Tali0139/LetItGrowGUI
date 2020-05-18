@@ -431,7 +431,7 @@ new Vue({
           // document.getElementById('usersPlants').style.display = "block"
           // document.getElementById('weatherWidget').style.display = "block"
           document.getElementById('personalWeather').style.display = "block"
-          document.getElementById('welcomeMessage').style.marginTop = "-6.5em"
+          document.getElementById('welcomeMessage').style.marginTop = "-6em"
           }
       
         })
