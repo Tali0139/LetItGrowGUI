@@ -298,7 +298,8 @@ new Vue({
       this.weatherData = backupWeatherdata
       setInterval(this.getWeatherData(), 60000)
 
-      setInterval(this.plantTempAlert(), 1000)
+
+      
       
       
       
@@ -318,8 +319,8 @@ new Vue({
         users: [],
         loggedInUser: [],
         username: "",
-        password: ""
-        
+        password: "",
+        alertmessage: ""
     },
 
     methods: {
@@ -427,6 +428,7 @@ new Vue({
               console.log(this.loggedInUser.plants)
              // this.getAllPlants()
              this.loggedInUser.plants.forEach((plant: IPlants) => { this.getSpecificPlants(plant.plantAPIid)});
+             if(this.plantsSorted){this.plantAlertSystem()}
 
               
           document.getElementById('loginDiv').style.display = "none"
@@ -436,8 +438,7 @@ new Vue({
           document.getElementById('personalWeather').style.display = "block"
           document.getElementById('welcomeMessage').style.marginTop = "-6em"
           
-            
-          
+                      
           }
       
         })
@@ -452,13 +453,7 @@ new Vue({
             })  
     },
 
-    plantTempAlert(){
-      console.log("YESSS")
-      this.plantsSorted.forEach((plant: IRoot) => { if (plant.main_species.growth.temperature_minimum.deg_c > -10 && plant.main_species.growth.temperature_minimum.deg_c != null)
-        {
-        alert("Its to cold. Bring your " + plant.common_name +"inside"  )
-      }});
-    },
+  
 
 
 
@@ -491,7 +486,36 @@ new Vue({
                 // this.addMessage = error.message
                 alert(error.message)
               })
-        }
+        },
+
+
+        plantAlertSystem() {
+          console.log("plant alert system is activated")
+                    
+          this.plantsSorted.forEach((plant: IRoot) => {
+              if (plant.main_species.growth.temperature_minimum > this.weatherData.temperature_minimum) {
+                this.alertmessage = "Your "+ plant.common_name +" is too cold, and needs to be brought indoors og wrapped for protection!"
+              }
+              if (this.weatherData.rain <= 3) {let weatherdroughtdata:string = "high"}
+              if (this.weatherData.rain > 3 && this.weatherData.rain<13) {let weatherdroughtdata:string = "medium"}
+              if (this.weatherData.rain >= 13) {let weatherdroughtdata:string = "low"}
+
+              if (plant.main_species.growth.drought_tolerance == "low" ||plant.main_species.growth.drought_tolerance == "medium" && this.weatherdroughtdata =="high") {
+                  this.alertmessage = "Your "+ plant.common_name + " needs water urgently!"
+                }
+              if (plant.main_species.growth.drought_tolerance == "low"  && this.weatherdroughtdata =="medium") {
+                  this.alertmessage = "Your "+ plant.common_name + " needs to be watered!"
+              }
+              if (plant.main_species.growth.drought_tolerance == "high" && this.weatherdroughtdata =="low") {
+                  this.alertmessage = "Your "+ plant.common_name + " may be at risk from too much rain, ensure proper drainage!"
+              }
+              alert(this.alertmessage)
+
+              //Jeg kan ikke få det til at virke... skal bruge change function, som logger, hvorvidt weatherdata ændrer sig, og hvis de gør, så kører plant alert system igen!!
+              if (this.loggedInUser && this.getWeatherData.temperature_minimum.last_update){setInterval(this.plantAlertSystem(),10000)}
+
+          })
+       }
 
        
     }
