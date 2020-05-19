@@ -427,17 +427,10 @@ new Vue({
               console.log(this.loggedInUser.plants)
              // this.getAllPlants()
              this.loggedInUser.plants.forEach((plant: IPlants) => { this.getSpecificPlants(plant.plantAPIid)});
-
-              
           document.getElementById('loginDiv').style.display = "none"
           document.getElementById('welcomeMessage').style.display = "block"
-          // document.getElementById('usersPlants').style.display = "block"
-          // document.getElementById('weatherWidget').style.display = "block"
           document.getElementById('personalWeather').style.display = "block"
           document.getElementById('welcomeMessage').style.marginTop = "-6em"
-          
-            
-          
           }
       
         })
