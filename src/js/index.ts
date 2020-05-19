@@ -345,7 +345,6 @@ new Vue({
     },
 
 
-
     getSearchPlants() {
       console.log(this.searchString)
       axios.get<IRoot[]>(searchUri + this.searchString + tokenString)
@@ -382,8 +381,6 @@ new Vue({
           if (response.data.images.length > 0 && response.data.common_name != null) {
             this.plantsSorted.push(response.data)
           }
-
-
         })
         .catch((error: AxiosError) => {
           //this.message = error.message
@@ -411,12 +408,6 @@ new Vue({
         })
     },
 
-    // DisplayPersonalWeather(){
-    //   document.getElementById('personalWeather').style.display = "block"
-    // },
-
-
-
     loginUser() {
       axios.get<IUser[]>(UsersUri)
         .then((response: AxiosResponse<IUser[]>) => {
@@ -431,27 +422,20 @@ new Vue({
               //this.loggedInUser.username = this.loggedInUser.username.capitalize();
               console.log("User:" + this.loggedInUser.username + " Logged in")
               console.log(this.loggedInUser.plants)
-             // this.getAllPlants()
-             this.loggedInUser.plants.forEach((plant: IPlants) => { this.getSpecificPlants(plant.plantAPIid)});
-          document.getElementById('loginDiv').style.display = "none"
-          document.getElementById('welcomeMessage').style.display = "block"
-          document.getElementById('personalWeather').style.display = "block"
-          document.getElementById('welcomeMessage').style.marginTop = "-6em"
-          }
-
+              // this.getAllPlants()
+              this.loggedInUser.plants.forEach((plant: IPlants) => { this.getSpecificPlants(plant.plantAPIid) });
+              document.getElementById('loginDiv').style.display = "none"
+              document.getElementById('welcomeMessage').style.display = "block"
+              document.getElementById('personalWeather').style.display = "block"
+              document.getElementById('welcomeMessage').style.marginTop = "-6em"
+            }
+          })
         })
         .catch((error: AxiosError) => {
           //this.message = error.message
           //alert(error.message) // https://www.w3schools.com/js/js_popup.asp
         })
     },
-
-
-
-
-
-
-
 
     deletePlant(deleteId: number) {
       let uri: string = baseUri + "/" + deleteId
@@ -502,7 +486,7 @@ new Vue({
           if (plant.main_species.growth.drought_tolerance == "high" && this.weatherdroughtdata == "low") {
             this.alertmessage = "Your " + plant.common_name + " may be at risk from too much rain, ensure proper drainage!"
           }
-          if(this.alertmessage){alert(this.alertmessage)}
+          if (this.alertmessage) { alert(this.alertmessage) }
 
         })
       }
