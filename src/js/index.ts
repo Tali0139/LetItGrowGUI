@@ -297,6 +297,9 @@ new Vue({
     mounted: function(){
       this.weatherData = backupWeatherdata
       setInterval(this.getWeatherData(), 60000)
+
+      setInterval(this.plantTempAlert(), 1000)
+      
       
       
     },
@@ -432,6 +435,9 @@ new Vue({
           // document.getElementById('weatherWidget').style.display = "block"
           document.getElementById('personalWeather').style.display = "block"
           document.getElementById('welcomeMessage').style.marginTop = "-6em"
+          
+            
+          
           }
       
         })
@@ -447,13 +453,11 @@ new Vue({
     },
 
     plantTempAlert(){
-      this.loggedInUser.plants.forEach((plant: IPlants) => { this.getSpecificPlants(plant.plantAPIid)});
-     if (this.plant.temperature_minimum > this.weatherData.randomTemperature)
-       {
-       alert("Its to cold. Bring your " + this.plant.common_name +"inside"  )
-     }
-    
-       
+      console.log("YESSS")
+      this.plantsSorted.forEach((plant: IRoot) => { if (plant.main_species.growth.temperature_minimum.deg_c > -10 && plant.main_species.growth.temperature_minimum.deg_c != null)
+        {
+        alert("Its to cold. Bring your " + plant.common_name +"inside"  )
+      }});
     },
 
 
