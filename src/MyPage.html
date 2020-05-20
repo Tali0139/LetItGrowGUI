@@ -5,8 +5,10 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>My Page</title>
+  <title>LetItGrow - My Page</title>
   <link rel="stylesheet" type="text/css" href="bundle.css" />
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
@@ -15,118 +17,301 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
   <script src="https://code.iconify.design/1/1.0.6/iconify.min.js"></script>
- 
+  <script>
+    !function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = 'https://weatherwidget.io/js/widget.min.js'; fjs.parentNode.insertBefore(js, fjs); } }(document, 'script', 'weatherwidget-io-js');
+  </script>
+  
+<script src="https://cdnres.willyweather.com/widget/warning/loadView.html?id=124964" class="weather-widget-alert" type="application/javascript"></script>
+
+
+
+
 </head>
 
 <style>
   .card-img-top {
     width: 100%;
-    height: 20vw;
+    height: 350px;
     object-fit: cover;
   }
 
+  .card-deck {
+    float: left;
+    position: static;
+    width: 20%;
+    max-width: 400px;
+  }
+
+  .alert {
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  animation-name: example;
+  animation-duration: 0.25s;
+  border-left: 8px solid #8ab6e6;
+  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+}
+
+.alert:hover {
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  animation-name: example;
+  animation-duration: 0.25s;
+  border-left: 8px solid #8ab6e6;
+  box-shadow: 0 20px 35px rgba(0,0,0,0.25), 0 20px 20px rgba(0,0,0,0.22);
+}
+
+  .card {
+    animation-name: example;
+    animation-duration: 0.25s;
+    box-shadow: 0 20px 35px rgba(0, 0, 0, 0.1), 0 20px 20px rgba(0, 0, 0, 0.22);
+  }
+
+
+  .card-text {
+    font-size: small;
+  }
+
+
   .column {
-  float: left;
-  width: 30%;
+    float: left;
+    width: 70%;
+    height: 300px;
+  }
+
+  .weather-widget-alert {
+    width: 490px;
+  }
+  
+
+  .cardmiddle {
+    width: 25%;
+  }
+
+  .row:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+
+  .container {
+    position: absolute;
+  }
+  .boxShadow{
+    box-shadow: 0 20px 35px rgba(0,0,0,0.1), 0 20px 20px rgba(0,0,0,0.22);  
+  }
+
+  .logo:hover {
+    transform: rotate(10deg) scale(2.0);
+  }
+
+  @media only screen and (max-width: 1810px) {
+    .alert {
+      display: none;
+    }
 }
 
-.column1 {
-  float: left;
-  width: 10%;
+  @media only screen and (max-width: 911px) {
+    .container {
+      margin-top: 5em;
+    }
 }
 
-.row:after {
-  content: "";
-  display: table;
-  clear: both;
+@media only screen and (max-width: 643px) {
+    .container {
+      margin-top: 10em;
+    }
 }
 
-.container {
-  position: absolute;
+@media only screen and (max-width: 450px) {
+    .container {
+      margin-top: 12em;
+    }
 }
+
+@media only screen and (max-width: 332px) {
+    .container {
+      margin-top: 25em;
+    }
+}
+
+
 
 </style>
 
 <body>
   <div id="app">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <a class="navbar-brand" href="#">
-        <img src="https://d1nhio0ox7pgb.cloudfront.net/_img/g_collection_png/standard/512x512/plant.png" width="30"
-          height="30" alt="">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light" style="height: 72px;">
+      <a class="navbar-brand" href="index.htm">
+        <img class="logo" style="margin-bottom: 10px;" src="https://i.imgur.com/ojRIguR.png" width="30" height="30" alt="">
         Let It Grow</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-  
+
       <div class="collapse navbar-collapse" style="margin-left: 5em;" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
-         
+
           </li>
           <li class="nav-item">
             <a class="nav-link" href="index.htm">Plants</a>
           </li>
-  
+
           <li class="nav-item active">
             <a class="nav-link" href="MyPage.html">My page<span class="sr-only">(current)</span></a>
           </li>
         </ul>
-       
+
       </div>
     </nav>
-
-  <!-- Login form -->
-<div class="container">
-   <div class="row" style="margin-left: 1em; margin-top: 1em;">
-  <div class="column">
-    <v-form role="form" @submit.prevent>
-   <!-- <fieldset>-->						
-    <h3 >Login to your account</h3>
-    <!-- <h5 style="font-size: small;">Login to your account</h5> -->
-     
-  <div class="form-group">
-    <input type="text" name="username" id="username" class="form-control input-lg" placeholder="Username" v-model="username">
-  </div>
-  <div class="form-group">
-    <input type="password" name="password" id="password" class="form-control input-lg" placeholder="Password" v-model="password">
-  </div>
-  <div>
-    <input  class="btn btn-outline-success" value="Log In" v-on:click="loginUser">
-  </div>
-     
- <!--</fieldset>-->
-</v-form>	
-</div>
-
-<!-- Register form -->
-<div class="column" style="margin-left: 2.5em;">
-  <form role="form">
-   <fieldset>							
-     
-     <h3 >Create new account</h3>
-      <div class="form-group">
-       <input type="text" name="username1" id="username1" class="form-control input-lg" placeholder="Username">
-     </div>
-  
-     <div class="form-group">
-       <input type="email" name="email" id="email" class="form-control input-lg" placeholder="Email Address">
-     </div>
-     <div class="form-group">
-       <input type="password" name="password1" id="password1" class="form-control input-lg" placeholder="Password">
-     </div>
-       <div class="form-group">
-       <input type="password" name="password2" id="password2" class="form-control input-lg" placeholder="Confirm Password">
-     </div>
-     <div>
-      <input type="submit" class="btn btn-outline-primary" value="Sign up">
-    </div>
-    </div>
+    <!-- Login form -->
+   
+   
+      <div class="row">
+        <div class="column" style="width: 50%; max-width: 50%;" >
+          <a style="margin-left: 12px;" class="weatherwidget-io" href="https://forecast7.com/en/44d35n87d83/denmark/"
+          data-label_1="Roskilde" data-label_2="Denmark" data-icons="Climacons Animated" data-days="3"
+          data-shadow="rgba(255, 255, 255, 0)" data-highcolor="#ff0000" data-lowcolor="rgba(0, 75, 255, 0.72)"
+          data-suncolor="#f9b756" data-mooncolor="#dcda4e" data-cloudcolor="#a5a5a5" data-cloudfill="#a5a5a5"
+          data-raincolor="#3cc8ff" data-snowcolor="#c9c9c9"  >Roskilde Denmark</a>
+        </div>
       
-   </fieldset>
-  </form>
-</div>
-</div>
-<script src="bundle.js"></script>
-</body>
-</html>
 
+       <div class="column" style="margin-top: -15em;" >
+       <div class="row" id="personalWeather" style="display: none; margin-left: -8em; margin-top: -1em;" >
+        <div style="width: 500px;" style="margin-top: 2em; margin-left: 1em;" class="column">
+          <div v-if="weatherData" class="alert alert-primary" style="min-width: 500px; margin-left: 80em; margin-top: 1em;">
+            <p><u>Latest reading</u>: <a class="alert-link" >{{weatherData[weatherData.length-1].measureTime}}</a>, Location: <a class="alert-link" >
+              {{weatherData[weatherData.length-1].deviceLocation}}</a>
+            <p style="margin-top: 15px;"> <u>Weather info</u>: Temp:<a class="alert-link">
+                {{weatherData[weatherData.length-1].randomTemperature}}°C </a>|    Rain: <a class="alert-link">
+                {{weatherData[weatherData.length-1].rain}}.mm
+              </a>|    Wind speed: <a class="alert-link"> {{weatherData[weatherData.length-1].windSpeed}}.m/s</a>
+            </p>
+
+            <div v-if="weatherData[weatherData.length-1].rain >= 1">
+              <span class="iconify" width="5em" data-icon="typcn-weather-downpour" data-inline="false"></span>
+            </div>
+            <div
+              v-else-if="weatherData[weatherData.length-1].rain <= 0 && weatherData[weatherData.length-1].randomTemperature >= 10  ">
+              <span class="iconify" width="5em" data-icon="typcn-weather-sunny" data-inline="false"></span>
+            </div>
+            <div
+              v-else-if="weatherData[weatherData.length-1].randomTemperature <= 10 && weatherData[weatherData.length-1].rain <= 0 ">
+              <span class="iconify" width="5em" data-icon="websymbol-cloud" data-inline="false"></span>
+            </div>
+          </div>
+            <!--Notifikation start-->
+            <div v-for="plant in plantsSorted" class="mt-1 pd-1" > 
+            <div v-if="plantAlertSystem" style="height: 85px;  margin-left: 80em; margin-bottom: 10px;" id="alertMessage" class="column boxShadow  rounded pl-1 alert-success" >
+              
+              <div v-if="plantsSorted">
+               <h4> {{ plant.common_name}}  </h4>
+              </div>
+              <p> {{alertmessage}}</p>
+          </div>
+        </div>
+              <!--Notifikation start-->
+        </div>
+        
+      </div>
+    
+
+      
+      <div class="container" >
+    <div class="row" >
+      <div class="col-auto" style="max-width: 400px; margin-top: 4em; margin-left: 2em;">
+        <v-form role="form" @submit.prevent id="loginDiv">
+          <!-- <fieldset>-->
+          <h3>Login to your account</h3>
+          <!-- <h5 style="font-size: small;">Login to your account</h5> -->
+
+          <div class="form-group">
+            <input type="text" name="username" id="username" class="form-control input-lg" placeholder="Username"
+              v-model="username">
+          </div>
+          <div class="form-group">
+            <input type="password" name="password" id="password" class="form-control input-lg"
+              v-on:keyup.enter="loginUser();" placeholder="Password" v-model="password">
+          </div>
+          <div>
+            <button id="loginUserButton" class="btn btn-outline-success my-2 my-sm-0" value="Log In"
+              v-on:click="loginUser();"> Log in</button>
+          </div>
+
+          </fieldset>
+        </v-form>
+        </div>
+      </div>
+      
+       
+      
+
+     
+        <h1 id="welcomeMessage" class="welcomeMessage" style="display: none; margin-left: 0.5em; margin-top: 1em; ">
+          Welcome, {{loggedInUser.username}}. Here is your list of plants.
+        </h1>
+    
+      <div class="row" style="margin-left: 15px;">
+          <!-- <div id="usersPlants" style="margin-top: 8em;"> -->
+            <div class="card-deck" v-for="plant in plantsSorted" id="plantDeck" style="width:450px">
+              <div class="card" style="margin-left: 10px; margin-bottom: 20px; margin-left: 25px; max-height: 680px; min-height: 640px; ">
+                <img class="card-img-top" :src="plant.images[0].url" alt="Card image cap">
+                <div class="card-body">
+
+                  <h5 style="margin-top: -5px;">{{ plant.common_name}}</h5>
+                  <p class="card-text"><i class="glyphicon glyphicon-certificate"></i> Minimum
+                    Temp:{{plant.main_species.growth.temperature_minimum.deg_c}}°C</p>
+                  <p class="card-text"><i class="glyphicon glyphicon-tint"></i> Watering needs:
+                    {{plant.main_species.growth.moisture_use}}</p>
+                  <p class="card-text"><i class="glyphicon glyphicon-grain"></i> Fertilisation requirements:
+                    {{plant.main_species.growth.fertility_requirement}}</p>
+                  <button type="button" class="btn btn-primary" style="margin-top: 2em;" data-toggle="modal"
+                    data-target="#exampleModalCenter">Details</button>
+                  <!-- Modal -->
+                  <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+                    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLongTitle">{{ plant.scientific_name}}</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+
+                          <p>MINIMUM RAIN PRECIPITATION: {{plant.main_species.growth.precipitation_minimum.cm}} cm</p>
+
+                          <p>SEED PERSISTENCE: {{plant.main_species.fruit_or_seed.seed_persistence}}</p>
+
+                          <p>LIFESPAN: {{plant.main_species.specifications.lifespan}}</p>
+
+                          <p>MATURE HEIGHT: {{plant.main_species.specifications.mature_height.cm}} cm</p>
+
+                          <p>DROUGHT TOLERANCE: {{plant.main_species.growth.drought_tolerance}} </p>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Luk</button>
+
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+              
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+      </div>
+  <script src="bundle.js"></script>
+</body>
+
+</html>
