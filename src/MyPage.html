@@ -50,7 +50,22 @@
   border-left: 8px solid #8ab6e6;
   box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
 }
-
+.alertNotifikation {
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  animation-name: example;
+  animation-duration: 0.25s;
+  border-left: 8px solid #ABD9B5;
+  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+}
+.alertNotifikation:hover {
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  animation-name: example;
+  animation-duration: 0.25s;
+  border-left: 8px solid #ABD9B5;
+  box-shadow: 0 20px 35px rgba(0.25,0,0,0.25), 0 20px 20px rgba(0,0,0,0.22);
+}
 .alert:hover {
   border-top-left-radius: 10px;
   border-bottom-left-radius: 10px;
@@ -180,7 +195,7 @@
        <div class="column" style="margin-top: -15em;" >
        <div class="row" id="personalWeather" style="display: none; margin-left: -8em; margin-top: -1em;" >
         <div style="width: 500px;" style="margin-top: 2em; margin-left: 1em;" class="column">
-          <div v-if="weatherData" class="alert alert-primary" style="min-width: 500px; margin-left: 80em; margin-top: 1em;">
+          <div v-if="weatherData" class="alert alert-primary" style="min-width: 500px; margin-left: 90em; margin-top: 1em;">
             <p><u>Latest reading</u>: <a class="alert-link" >{{weatherData[weatherData.length-1].measureTime}}</a>, Location: <a class="alert-link" >
               {{weatherData[weatherData.length-1].deviceLocation}}</a>
             <p style="margin-top: 15px;"> <u>Weather info</u>: Temp:<a class="alert-link">
@@ -203,15 +218,15 @@
           </div>
             <!--Notifikation start-->
             <div v-for="plant in plantsSorted" class="mt-1 pd-1" > 
-            <div v-if="plantAlertSystem" style="height: 85px;  margin-left: 80em; margin-bottom: 10px;" id="alertMessage" class="column boxShadow  rounded pl-1 alert-success" >
+            <div v-if="plantAlertSystem" style="width:500px; height: 85px;  margin-left: 90em; margin-bottom: 15px;" id="alertMessage" class="column alertNotifikation rounded pl-1 alert-success" >
               
               <div v-if="plantsSorted">
                <h4> {{ plant.common_name}}  </h4>
               </div>
-              <p> {{alertmessage}}</p>
+              <p> {{plantalertmessage}}</p>
           </div>
         </div>
-              <!--Notifikation start-->
+              <!--Notifikation slut-->
         </div>
         
       </div>
