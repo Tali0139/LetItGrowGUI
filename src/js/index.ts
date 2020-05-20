@@ -288,6 +288,7 @@ let searchUri: string = "https://growproxy.azurewebsites.net/plants/?q="
 let tokenString: string = "&token=Mm9iZ21HRkk2V1BhSTFLaUJQL0d5dz09&page_size=1000"
 let UsersUri: string = "https://letitgrowinmemorydb.azurewebsites.net/api/users"
 let backupWeatherdata: IPiWeatherData = { randomTemperature: 10, measureTime: Date.now(), rain: 2, windSpeed: 10, deviceLocation: "The shed" }
+let alertmessage: string = "No worries, your plant is doing fine!"
 
 
 
@@ -320,6 +321,7 @@ new Vue({
     loggedInUser: [],
     username: "",
     password: "",
+    plantalertmessage: ""
 
   },
 
@@ -469,28 +471,26 @@ new Vue({
     plantAlertSystem() {
       if (this.loggedInUser) {
         console.log("plant alert system is activated")
-        let alertmessage: string = ""
         this.plantsSorted.forEach((plant: IRoot) => {
           if (plant.main_species.growth.temperature_minimum.deg_c > this.weatherData.temperature_minimum) {
-            alertmessage = "Your " + plant.common_name + " is too cold! Take it inside or cover it for protection!"
+            this.alertmessage = "Your " + plant.common_name + " is too cold! Take it inside or cover it for protection!"
           }
           if (plant.main_species.growth.moisture_use == "high" || plant.main_species.growth.moisture_use == "medium" && this.weatherData.rain <= 7) {
-            alertmessage = "Your " + plant.common_name + " needs water urgently!"
+            this.alertmessage = "Your " + plant.common_name + " needs water urgently!"
           }
           if (plant.main_species.growth.moisture_use == "high" && (this.weatherData.rain > 7 && this.weatherData.rain < 13)) {
-            alertmessage = "Your " + plant.common_name + " needs to be watered!"
+            this.alertmessage = "Your " + plant.common_name + " needs to be watered!"
           }
           if (plant.main_species.growth.moisture_use == "low" && this.weatherData.rain >= 13) {
-            alertmessage = "Your " + plant.common_name + " may be at risk from too much rain, ensure proper drainage!"
+            this.alertmessage = "Your " + plant.common_name + " may be at risk from too much rain, ensure proper drainage!"
           }
-          if (plant) { alertmessage = "Your " + plant.common_name + " is doing fine. Enjoy your garden!" }
+          if(plant.common_name) { this.alertmessage = "Your " + plant.common_name + " is doing fine. Enjoy your garden!" }
         })
-        if (alertmessage) { alert(alertmessage) }
-        else alertmessage ="No worries, your garden is doing fine!"
-           console.log(alertmessage)
+        if (this.alertmessage) { console.log(this.alertmessage + "ARGHHHHHH") }
+        else { this.alertmessage = "No worries, your plant is doing fine!" }
+        this.plantalertmessage = this.alertmessage
+        console.log(this.plantalertmessage)
       }
     }
   }
-
-
 })
