@@ -113,7 +113,7 @@ interface Growth {
   anaerobic_tolerance: string;
   caco_3_tolerance: string;
   cold_stratification_required: any;
-  drought_tolerance: string;
+.moisture_use: string;
   fertility_requirement: string;
   fire_tolerance: string;
   frost_free_days_minimum: number;
@@ -320,7 +320,7 @@ new Vue({
     loggedInUser: [],
     username: "",
     password: "",
-    alertmessage: ""
+
   },
 
   methods: {
@@ -469,26 +469,25 @@ new Vue({
     plantAlertSystem() {
       if (this.loggedInUser) {
         console.log("plant alert system is activated")
+        let alertmessage: string = ""
         this.plantsSorted.forEach((plant: IRoot) => {
-          if (plant.main_species.growth.temperature_minimum > this.weatherData.temperature_minimum) {
-            this.alertmessage = "Your " + plant.common_name + " is too cold, and needs to be brought indoors og wrapped for protection!"
+          if (plant.main_species.growth.temperature_minimum.deg_c > this.weatherData.temperature_minimum) {
+            alertmessage = "Your " + plant.common_name + " is too cold! Take it inside or cover it for protection!"
           }
-          if (this.weatherData.rain <= 3) { let weatherdroughtdata: string = "high" }
-          if (this.weatherData.rain > 3 && this.weatherData.rain < 13) { let weatherdroughtdata: string = "medium" }
-          if (this.weatherData.rain >= 13) { let weatherdroughtdata: string = "low" }
-
-          if (plant.main_species.growth.drought_tolerance == "low" || plant.main_species.growth.drought_tolerance == "medium" && this.weatherdroughtdata == "high") {
-            this.alertmessage = "Your " + plant.common_name + " needs water urgently!"
+          if (plant.main_species.growth.moisture_use == "high" || plant.main_species.growth.moisture_use == "medium" && this.weatherData.rain <= 7) {
+            alertmessage = "Your " + plant.common_name + " needs water urgently!"
           }
-          if (plant.main_species.growth.drought_tolerance == "low" && this.weatherdroughtdata == "medium") {
-            this.alertmessage = "Your " + plant.common_name + " needs to be watered!"
+          if (plant.main_species.growth.moisture_use == "high" && (this.weatherData.rain > 7 && this.weatherData.rain < 13)) {
+            alertmessage = "Your " + plant.common_name + " needs to be watered!"
           }
-          if (plant.main_species.growth.drought_tolerance == "high" && this.weatherdroughtdata == "low") {
-            this.alertmessage = "Your " + plant.common_name + " may be at risk from too much rain, ensure proper drainage!"
+          if (plant.main_species.growth.moisture_use == "low" && this.weatherData.rain >= 13) {
+            alertmessage = "Your " + plant.common_name + " may be at risk from too much rain, ensure proper drainage!"
           }
-          if (this.alertmessage) { alert(this.alertmessage) }
-
+          if (plant) { alertmessage = "Your " + plant.common_name + " is doing fine. Enjoy your garden!" }
         })
+        if (alertmessage) { alert(alertmessage) }
+        else alertmessage ="No worries, your garden is doing fine!"
+           console.log(alertmessage)
       }
     }
   }
